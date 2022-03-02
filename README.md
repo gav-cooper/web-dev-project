@@ -1,7 +1,6 @@
 # Web Dev Project
 
-Creating an app to allow people publish and share their stories, while getting
-feedback from others.
+Creating an app to allow people publish and share things they have written. 
 
 Expected features: 
 - Add original writings

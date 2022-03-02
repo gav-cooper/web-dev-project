@@ -1,0 +1,26 @@
+{
+  "name": "web-dev-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gav-cooper/web-dev-project.git"
+  },
+  "author": "Gavin Cooper & Cody Painter",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gav-cooper/web-dev-project/issues"
+  },
+  "homepage": "https://github.com/gav-cooper/web-dev-project#readme",
+  "dependencies": {
+    "better-sqlite3": "^7.5.0",
+    "express": "^4.17.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}

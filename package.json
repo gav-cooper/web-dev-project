@@ -18,6 +18,7 @@
   "homepage": "https://github.com/gav-cooper/web-dev-project#readme",
   "dependencies": {
     "better-sqlite3": "^7.5.0",
+    "dotenv": "^16.0.0",
     "express": "^4.17.3"
   },
   "devDependencies": {

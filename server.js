@@ -1,0 +1,12 @@
+"use strict";
+require("dotenv").config();
+
+const app = require("./app");
+
+app.listen(process.env.PORT, () => {
+    console.log(`Listening on port: ${process.env.PORT}`);
+});
+
+app.get("/", (req, res) => {
+    res.send(`Listening. Port: ${process.env.PORT}`);
+});

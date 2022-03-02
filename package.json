@@ -4,7 +4,9 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "init-db": "node ./Database/init-db.js",
+    "start-dev": "npm run init-db && nodemon server.js"
   },
   "repository": {
     "type": "git",
@@ -17,6 +19,7 @@
   },
   "homepage": "https://github.com/gav-cooper/web-dev-project#readme",
   "dependencies": {
+    "argon2": "^0.28.5",
     "better-sqlite3": "^7.5.0",
     "dotenv": "^16.0.0",
     "express": "^4.17.3"

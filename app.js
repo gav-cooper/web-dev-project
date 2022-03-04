@@ -11,6 +11,9 @@ app.use(express.json());
 // Require model
 const userModel = require("./Models/userModel")
 
+// global user var
+let userID;
+
 app.post("/users", async (req,res) => {
     if (req.body.username.includes("@") || !req.body.username || 
         !req.body.email || !req.body.password) {

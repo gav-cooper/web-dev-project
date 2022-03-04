@@ -1,6 +1,7 @@
 "use strict";
 require("dotenv").config();
 
+const argon2 = require("argon2");
 const express = require("express");
 const { send } = require("express/lib/response");
 const app = express();
@@ -11,13 +12,57 @@ app.use(express.json());
 const userModel = require("./Models/userModel")
 
 
-app.post("/users", (req,res) => {
-    if (!req.body.username|!req.body.email|req.body.password) {
-        return res.send("Missing keys!");
+app.post("/users", async (req,res) => {
+    if (!req.body.username || !req.body.email || !req.body.password) {
+        return res.sendStatus(400);
     }
-    const {username,email,password} = req.body;
-    userModel.createUser(username,email,password);
-    res.sendStatus(200);
+    const {username,password} = req.body;
+    let {email} = req.body;
+    email = email.toLowerCase();
+    // User Model returns a promise that needs to be resolved
+    if (!(await userModel.createUser(username,email,password))) {
+        return res.sendStatus(409);
+    }
+    res.sendStatus(201);
+});
+
+app.post("/login", async (req,res) => {
+    // Login using username or email
+    if (!(req.body.username || req.body.email) || !req.body.password) {
+        return res.sendStatus(400);
+    }
+
+    if (req.body.username){ // Login with username
+        const {username, password} = req.body;
+        const user = userModel.getUserByUsername(username);
+        if (!user) {
+            return res.sendStatus(400);
+        }
+        const {passwordHash} = user;
+        if (await argon2.verify(passwordHash,password)) {
+            // User login success
+            res.sendStatus(200);
+        } else {
+            // User login failure
+            res.sendStatus(400);
+        }
+    } else if (req.body.email) { // Login with email
+        let {email} = req.body;
+        email = email.toLowerCase();
+        const {password} = req.body;
+        const user = userModel.getUserByEmail(email);
+        if (!user) {
+            return res.sendStatus(400);
+        }
+        const {passwordHash} = user;
+        if (await argon2.verify(passwordHash,password)) {
+            // User login success
+            res.sendStatus(200);
+        } else {
+            // User login failure
+            res.sendStatus(400);
+        }
+    }
 });
 
 module.exports = app;

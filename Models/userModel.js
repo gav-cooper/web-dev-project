@@ -23,9 +23,37 @@ async function createUser (username, email, password) {
             "email":email,
             "passwordHash":hash
         });
+        return true;
     } catch (error) {
         console.error(error);
+        return false;
     }
 }
 
+function getUserByUsername(username) {
+    const sql = `
+        SELECT * FROM Users WHERE username = @username;
+        `;
+    const stmt = db.prepare(sql);
+    const record = stmt.get({
+        username
+    });
+    
+    return record;
+}
+
+function getUserByEmail(email) {
+    const sql = `
+        SELECT * FROM Users WHERE email = @email;
+        `;
+    const stmt = db.prepare(sql);
+    const record = stmt.get({
+        email
+    });
+    
+    return record;
+}
+
 exports.createUser = createUser;
+exports.getUserByUsername = getUserByUsername;
+exports.getUserByEmail= getUserByEmail;

@@ -1,10 +1,19 @@
 "use strict";
-
 const db = require("./db");
+
 const crypto = require("crypto");
 const argon2 = require('argon2');
 
-async function createUser (username, email, password) {
+
+/******************************************************************************/
+// Sessions
+
+const redis = require('redis');
+const session = require("express-session");
+
+/******************************************************************************/
+
+async function addUser (username, email, password) {
     const uuid = crypto.randomUUID();
     const hash = await argon2.hash(password);
 
@@ -54,6 +63,8 @@ function getUserByEmail(email) {
     return record;
 }
 
-exports.createUser = createUser;
-exports.getUserByUsername = getUserByUsername;
-exports.getUserByEmail= getUserByEmail;
+module.exports = {
+    addUser,
+    getUserByUsername,
+    getUserByEmail
+};

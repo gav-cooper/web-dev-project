@@ -1,18 +1,52 @@
+/*****************************************************************************/
+/* app.js                                                                    */
+/*****************************************************************************/
+
 "use strict";
 require("dotenv").config();
 
-const argon2 = require("argon2");
+/*****************************************************************************/
+// Session Management
+
+const redis = require("redis");
+const session = require("express-session");
+const RedisStore = require("connect-redis")(session);
+
+const sessionConfig = {
+  store: new RedisStore({ client: redis.createClient() }),
+  secret: process.env.COOKIE_SECRET, 
+  resave: false,
+  saveUninitialized: false,
+  name: "session", // now it is just a generic name
+  cookie: {
+    httpOnly: true,
+    maxAge: 1000 * 60 * 60 * 8, // 8 hours
+  }
+};
+
+/*****************************************************************************/
+// Create app
+
 const express = require("express");
-const { send } = require("express/lib/response");
 const app = express();
 
+/*****************************************************************************/
+// Enabling session management
+
+app.use(session(sessionConfig));
+
+/*****************************************************************************/
+// Allow access to static resources in the public directory
+
+app.use(express.static("public", {index: "index.html", extensions: ["html"]}));
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
+/*****************************************************************************/
 
 // Require model
-const userModel = require("./Models/userModel")
+const userController = require("./Controllers/userController");
 
-// global user var
-let userID;
 
 app.post("/users", async (req,res) => {
     if (req.body.username.includes("@") || !req.body.username || 
@@ -25,7 +59,7 @@ app.post("/users", async (req,res) => {
     email = email.toLowerCase();
 
     // User Model returns a promise that needs to be resolved
-    if (!(await userModel.createUser(username,email,password))) {
+    if (!(await userModel.addUser(username,email,password))) {
         return res.sendStatus(409);
     }
     res.sendStatus(201);

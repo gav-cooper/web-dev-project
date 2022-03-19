@@ -61,7 +61,6 @@ async function login(req, res){
                 req.session.user.username = user.username;
                 req.session.user.userID = user.userID;
                 req.session.isLoggedIn = true;
-                console.log(req.session);
                 res.sendStatus(200);
             });
         } else {

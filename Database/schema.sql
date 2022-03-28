@@ -7,9 +7,11 @@ CREATE TABLE IF NOT EXISTS Users (
 
 CREATE TABLE IF NOT EXISTS Posts (
     postID TEXT PRIMARY KEY,
-    author TEXT UNIQUE NOT NULL,
+    author TEXT NOT NULL,
+    post TEXT NOT NULL,
+    date TEXT NOT NULL,
     likes INTEGER NOT NULL DEFAULT 0 CHECK (likes >= 0),
-    FOREIGN KEY(author) REFERENCES Users(userID)
+    FOREIGN KEY(author) REFERENCES Users(username)
 );
 
 CREATE TABLE IF NOT EXISTS Comments (
@@ -17,6 +19,6 @@ CREATE TABLE IF NOT EXISTS Comments (
     author TEXT UNIQUE NOT NULL,
     post TEXT UNIQUE NOT NULL,
     likes INTEGER NOT NULL DEFAULT 0 CHECK (likes >= 0),
-    FOREIGN KEY(author) REFERENCES Users(userID),
+    FOREIGN KEY(author) REFERENCES Users(username),
     FOREIGN KEY(post) REFERENCES Posts(postID)
 );

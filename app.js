@@ -7,7 +7,6 @@ require("dotenv").config();
 
 /*****************************************************************************/
 // Session Management
-
 const redis = require("redis");
 const session = require("express-session");
 const RedisStore = require("connect-redis")(session);
@@ -26,26 +25,23 @@ const sessionConfig = {
 
 /*****************************************************************************/
 // Create app
-
 const express = require("express");
 const app = express();
 
 /*****************************************************************************/
 // Enabling session management
-
 app.use(session(sessionConfig));
 
 /*****************************************************************************/
 // Allow access to static resources in the public directory
-
 app.use(express.static("public", {index: "index.html", extensions: ["html"]}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 /*****************************************************************************/
-
-// Require model
+// Require controller
 const userController = require("./Controllers/userController");
+const postModel = require("./Models/postsModel");
 
 
 app.post("/users", userController.createNewUser);

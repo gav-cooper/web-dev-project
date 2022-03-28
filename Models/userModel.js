@@ -7,7 +7,6 @@ const argon2 = require('argon2');
 
 /******************************************************************************/
 // Sessions
-
 const redis = require('redis');
 const session = require("express-session");
 

@@ -2,8 +2,9 @@
 
 const db = require("./db");
 const crypto = require("crypto");
+const { builtinModules } = require("module");
 
-async function addPost (username, post) {
+function addPost (username, post) {
     const postid = crypto.randomUUID();
 
     const sql = `
@@ -28,4 +29,19 @@ async function addPost (username, post) {
         console.error(error);
         return false;
     }
+}
+
+function getAllByDate () {
+    const sql = `
+        SELECT * FROM Posts
+        ORDER BY date ASC
+    `;
+    const stmt = db.prepare(sql);
+    const posts = stmt.all();
+    return posts;
+}
+
+module.export = {
+    addPost,
+    getAllByDate
 }

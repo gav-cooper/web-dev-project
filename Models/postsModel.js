@@ -2,7 +2,6 @@
 
 const db = require("./db");
 const crypto = require("crypto");
-const { builtinModules } = require("module");
 
 function addPost (username, post) {
     const postid = crypto.randomUUID();

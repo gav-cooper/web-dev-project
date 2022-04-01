@@ -41,14 +41,25 @@ app.use(express.json());
 
 
 /*****************************************************************************/
-// Require controller
+// Require controllers
 const userController = require("./Controllers/userController");
-const postModel = require("./Models/postsModel");
+const postController = require("./Models/postsModel");
 
+/*****************************************************************************/
+// Endpoints
 
+// User
 app.post("/register", userController.createNewUser);
 app.post("/login", userController.login);
+
+// Posts
+// app.post("/newPost", postController.createNewPost);
+
 app.get("/api/test", (req, res) => {
     res.json({"user":req.session.user, "isLoggedIn":req.session.isLoggedIn});
 })
+
+/*****************************************************************************/
+// Export app
+
 module.exports = app;

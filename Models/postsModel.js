@@ -3,14 +3,15 @@
 const db = require("./db");
 const crypto = require("crypto");
 
-function addPost (username, post) {
+function addPost (username, subject, post) {
+    // change to multer?
     const postid = crypto.randomUUID();
 
     const sql = `
         INSERT INTO Posts 
-            (postID, author, post, date) 
+            (postID, author, subject, post, date) 
         VALUES 
-            (@postID, @author, @post, @date)
+            (@postID, @author, @subject, @post, @date)
     `;
     
     const time = Date.now();
@@ -20,6 +21,7 @@ function addPost (username, post) {
         stmt.run({
             "postID":postid,
             "author":username,
+            "subject":subject,
             "post": post,
             "date": time
         });

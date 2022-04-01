@@ -43,7 +43,9 @@ app.use(express.json());
 /*****************************************************************************/
 // Require controllers
 const userController = require("./Controllers/userController");
-const postController = require("./Models/postsModel");
+const postsController = require("./Controllers/postsController");
+const commentsController = require("./Controllers/commentsController");
+
 
 /*****************************************************************************/
 // Endpoints
@@ -55,6 +57,10 @@ app.post("/login", userController.login);
 // Posts
 // app.post("/newPost", postController.createNewPost);
 
+// Comments
+// [...]
+
+// Testing
 app.get("/api/test", (req, res) => {
     res.json({"user":req.session.user, "isLoggedIn":req.session.isLoggedIn});
 })

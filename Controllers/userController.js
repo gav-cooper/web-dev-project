@@ -94,6 +94,7 @@ async function login(req, res){
 }
 
 /******************************************************************************/
+// Exports 
 
 module.exports = {
     createNewUser,

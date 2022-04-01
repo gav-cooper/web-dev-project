@@ -2,12 +2,14 @@ CREATE TABLE IF NOT EXISTS Users (
     userID TEXT PRIMARY KEY,
     username TEXT UNIQUE NOT NULL,
     email TEXT UNIQUE NOT NULL,
-    passwordHash TEXT NOT NULL
+    passwordHash TEXT NOT NULL,
+    pfpPath TEXT DEFAULT "public/pfp/pfp.png"
 );
 
 CREATE TABLE IF NOT EXISTS Posts (
     postID TEXT PRIMARY KEY,
     author TEXT NOT NULL,
+    subject TEXT NOT NULL,
     post TEXT NOT NULL,
     date INT NOT NULL,
     likes INTEGER NOT NULL DEFAULT 0 CHECK (likes >= 0),

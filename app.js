@@ -55,7 +55,7 @@ app.post("/register", userController.createNewUser);
 app.post("/login", userController.login);
 
 // Posts
-// app.post("/newPost", postController.createNewPost);
+// app.post("/posts", postController.createNewPost);
 
 // Comments
 // [...]

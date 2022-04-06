@@ -42,7 +42,21 @@ function getAllByDate () {
     return posts;
 }
 
-module.export = {
+function getPost (postID) {
+    const sql = `
+        SELECT * FROM 
+            Posts
+        WHERE
+            postID = (@postID)
+
+    `;
+    const stmt = db.prepare(sql);
+    const post = stmt.get({postID});
+    return post;
+}
+
+module.exports = {
     addPost,
-    getAllByDate
+    getAllByDate,
+    getPost
 }

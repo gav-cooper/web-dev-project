@@ -37,11 +37,12 @@ app.use(express.urlencoded({ extended: false }));
 
 // Require controllers
 const userController = require("./Controllers/userController");
-const postsController = require("./Controllers/postController");
+const postController = require("./Controllers/postController");
 const commentsController = require("./Controllers/commentsController");
 
 // Validators
 const userValidator = require("./Validators/userValidator");
+const postValidator = require("./Validators/postValidator");
 
 // Endpoints
 app.post("/register", 
@@ -52,8 +53,12 @@ app.post("/login",
   userController.login);
 
 // Posts
-// app.post("/posts", postController.createNewPost);
-
+app.post("/posts/new", 
+  postValidator.validatePost,
+  postController.createPost);
+app.get("/posts/:postID",
+  postValidator.validatePostParam,
+  postController.viewPost);
 // Comments
 // [...]
 

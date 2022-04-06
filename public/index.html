@@ -4,15 +4,22 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/index.css">
     <title>Author</title>
 </head>
 <body>
     <h1>Welcome!</h1>
-    <p> Already have an account?
-        <a href="login.html">
-            Login
-        </a>    
-    </p>
+    <form method="POST" action="/login">
+        <div>
+            <label for="username"><b>Username or Email</b></label>
+            <input type="text" name="value" required>
+        </div>
+        <div>
+            <label for="password"><b>Password</b></label>
+            <input type="password" name="password" required>
+        </div>
+        <button>Submit</button>
+    </form>
     <p> Need an Account?
         <a href="register.html">
             Register

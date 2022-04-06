@@ -5,7 +5,6 @@
 "use strict";
 require("dotenv").config();
 
-/*****************************************************************************/
 // Session Management
 const redis = require("redis");
 const session = require("express-session");
@@ -23,36 +22,34 @@ const sessionConfig = {
   }
 };
 
-/*****************************************************************************/
 // Create app
 const express = require("express");
 const app = express();
 
-/*****************************************************************************/
 // Enabling session management
 app.use(session(sessionConfig));
 
-/*****************************************************************************/
 // Allow access to static resources in the public directory
 app.use(express.static("public", {index: "index.html", extensions: ["html"]}));
 app.use(express.urlencoded({ extended: false }));
 
 app.use(express.json());
 
-
-/*****************************************************************************/
 // Require controllers
 const userController = require("./Controllers/userController");
 const postsController = require("./Controllers/postController");
 const commentsController = require("./Controllers/commentsController");
 
+// Validators
+const userValidator = require("./Validators/userValidator");
 
-/*****************************************************************************/
 // Endpoints
-
-// User
-app.post("/register", userController.createNewUser);
-app.post("/login", userController.login);
+app.post("/register", 
+  userValidator.validateRegistration, 
+  userController.createNewUser);
+app.post("/login", 
+  userValidator.validateLogin, 
+  userController.login);
 
 // Posts
 // app.post("/posts", postController.createNewPost);

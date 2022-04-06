@@ -31,9 +31,9 @@ app.use(session(sessionConfig));
 
 // Allow access to static resources in the public directory
 app.use(express.static("public", {index: "index.html", extensions: ["html"]}));
-app.use(express.urlencoded({ extended: false }));
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 // Require controllers
 const userController = require("./Controllers/userController");

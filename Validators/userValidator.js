@@ -56,4 +56,4 @@ function makeBodyValidator (schema) {
 module.exports = {
     validateRegistration,
     validateLogin
-}
+};

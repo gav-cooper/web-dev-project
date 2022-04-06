@@ -1,0 +1,27 @@
+h1 {
+    margin: auto auto 40px auto;
+    max-width: 400px;
+    text-align: center;
+}
+
+form {
+    margin: auto;
+    max-width: 200px;
+}
+
+input {
+    width: 100%;
+    margin: 10px 0 10px 0;
+    padding: 10px;
+    background: rgb(244, 244, 244);
+    border: none;
+}
+
+input:focus {
+    background-color: rgb(230, 230, 230);
+}
+
+button {
+    width: 220px;
+    height: 50px;
+}

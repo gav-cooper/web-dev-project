@@ -4,20 +4,22 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/register.css">
     <title>Register</title>
 </head>
 <body>
-    <form method="POST" action="/register">
+    <h1>Create an account!</h1>
+    <form method="POST" action="/register" class="form-container">
         <div>
-            <label for="username">Username</label>
+            <label for="username"><b>Username</b></label>
             <input name="username" type="username" required>
         </div>
         <div>
-            <label for="email">Email</label>
+            <label for="email"><b>Email</b></label>
             <input name="email" type="email" required>
         </div>
         <div>
-            <label for="password">Password</label>
+            <label for="password"><b>Password</b></label>
             <input name="password" type="password" required>
         </div>
     <button>Submit</button>

@@ -1,0 +1,39 @@
+/* Center header */
+h1 {
+    margin: auto auto 40px auto;
+    max-width: 100px;
+}
+
+/* Center form */
+form {
+    margin:auto;
+    max-width: 250px;
+    padding: 10px;
+    background-color: white;
+  }
+  
+/* Format input elements */
+input {
+    width: 100%;
+    margin: 5px 0 10px 0;
+    padding: 10px;
+    background: rgb(244, 244, 244);
+    border: none;
+}
+  
+/* Show when input element is selected */
+input:focus {
+    background-color: rgb(230, 230, 230);
+}
+
+/* Center paragraph element */
+p {
+    margin:auto;
+    max-width: 200px;
+    margin: 20px auto 0 auto;
+}
+
+button {
+    width: 270px;
+    height: 50px
+}

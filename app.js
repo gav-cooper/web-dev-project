@@ -43,7 +43,7 @@ app.use(express.json());
 /*****************************************************************************/
 // Require controllers
 const userController = require("./Controllers/userController");
-const postsController = require("./Controllers/postsController");
+const postsController = require("./Controllers/postController");
 const commentsController = require("./Controllers/commentsController");
 
 

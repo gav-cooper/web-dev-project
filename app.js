@@ -53,7 +53,7 @@ app.post("/login",
   userController.login);
 
 // Posts
-app.post("/posts/new", 
+app.post("/posts", 
   postValidator.validatePost,
   postController.createPost);
 app.get("/posts/:postID",

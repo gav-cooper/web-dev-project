@@ -62,8 +62,22 @@ function getUserByEmail(email) {
     return record;
 }
 
+// Updates values if new data is provided, otherwise uses data already in DB
+function updateUser(username, email, passwordHash, userID) {
+    const sql = `
+        UPDATE Users SET 
+           username = COALESCE(@username, username), 
+           email = COALESCE(@email, email), 
+           passwordHash = COALESCE(@passwordHash, passwordHash) 
+        WHERE 
+            userID = @userID`;
+    const stmt = db.prepare(sql);
+    stmt.run({username, email, passwordHash, userID});
+}
+
 module.exports = {
     addUser,
     getUserByUsername,
-    getUserByEmail
+    getUserByEmail,
+    updateUser
 };

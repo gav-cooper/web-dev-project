@@ -20,7 +20,7 @@ async function submitUserForm (event) {
             "body": JSON.stringify(body)
         });
         if (response.ok) {      // Account created
-            window.location.href="/index"; 
+            window.location.href="/"; 
 
         } else if (response.status === 400) {   // Input parameter error
             const data = await response.json();

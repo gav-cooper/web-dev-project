@@ -52,6 +52,9 @@ app.post("/login",
   userValidator.validateLogin, 
   userController.login);
 
+// Users
+app.post("/users/:userID/password",userController.updatePassword);
+
 // Posts
 app.post("/posts", 
   postValidator.validatePost,

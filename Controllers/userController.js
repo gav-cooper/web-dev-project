@@ -80,10 +80,33 @@ async function login(req, res){
     }
 }
 
+async function updatePassword(req, res) {
+    if (!req.session.user) {
+        return res.sendStatus(400);
+    }
+    if (req.params.userID !== req.session.user.userID) {
+        return res.sendStatus(403);
+    }
+
+    const {oldPassword, newPassword} = req.body;
+    const user = userModel.getUserByUsername(req.session.user.username);
+    if (!user) {
+        return res.sendStatus(400);
+    }
+    const {passwordHash} = user;
+
+    // check if password supplied matches password in database
+    if (!(await argon2.verify(passwordHash,oldPassword))) {
+        return res.sendStatus(400);
+    }
+    userModel.updatePassword(req.params.userID, newPassword);
+    res.sendStatus(201);
+}
 /******************************************************************************/
 // Exports 
 
 module.exports = {
     createNewUser,
-    login
+    login,
+    updatePassword
 };

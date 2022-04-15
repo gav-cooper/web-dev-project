@@ -9,21 +9,25 @@
 </head>
 <body>
     <h1>Welcome!</h1>
-    <form method="POST" action="/login">
-        <div>
-            <label for="username"><b>Username or Email</b></label>
-            <input type="text" name="value" required>
-        </div>
-        <div>
-            <label for="password"><b>Password</b></label>
-            <input type="password" name="password" required>
-        </div>
-        <button>Submit</button>
-    </form>
-    <p> Need an Account?
-        <a href="/register">
-            Register
-        </a>
-    </p>
+    <div class="form-wrapper">
+        <form method="POST" action="/login">
+            <div class="username-container">
+                <label for="username"><b>Username or Email</b></label>
+                <input type="text" name="value" required>
+            </div>
+            <div class="password-container">
+                <label for="password"><b>Password</b></label>
+                <input type="password" name="password" required>
+            </div>
+            <button>Submit</button>
+        </form>
+    </div>
+    <div class="create-wrapper">
+        <p> Need an Account?
+            <a href="/register">
+                Register
+            </a>
+        </p>
+    </div>
 </body>
 </html>

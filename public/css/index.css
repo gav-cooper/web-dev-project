@@ -1,39 +1,65 @@
 /* Center header */
 h1 {
-    margin: auto auto 40px auto;
-    max-width: 100px;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 5%
+}
+
+.form-wrapper {
+    display:flex;
+    flex-direction:column;
+    box-sizing: border-box;
+    align-items: center;
+    width:100%;
 }
 
 /* Center form */
 form {
-    margin:auto;
-    max-width: 250px;
+    width:30%;
     padding: 10px;
     background-color: white;
   }
   
+div {
+    display:inline-flex;
+    flex-direction: column;
+    width:100%;
+}
 /* Format input elements */
 input {
     width: 100%;
-    margin: 5px 0 10px 0;
+    margin: 1% 0 3% 0;
     padding: 10px;
     background: rgb(244, 244, 244);
     border: none;
 }
-  
+ 
 /* Show when input element is selected */
 input:focus {
     background-color: rgb(230, 230, 230);
 }
 
 /* Center paragraph element */
-p {
-    margin:auto;
-    max-width: 200px;
-    margin: 20px auto 0 auto;
+.create-wrapper {
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    width:100%;
+}
+
+a {
+    display:inline;
+    padding-left:5px;
+    color:rgb(1, 94, 193)
+}
+
+a:hover{
+    color:blue;
 }
 
 button {
-    width: 270px;
+    box-sizing: border-box;
+    width: 100%;
     height: 50px
 }

@@ -26,3 +26,8 @@ a {
 a:hover {
    color: cyan;
 }
+
+#pfp {
+    size:10px;
+    
+}

@@ -62,6 +62,9 @@ app.post("/posts",
 app.get("/posts/:postID",
   postValidator.validatePostParam,
   postController.viewPost);
+app.post("/posts/:postID/like",
+  postValidator.validatePostParam,
+  postController.likePost)
 // Comments
 // [...]
 

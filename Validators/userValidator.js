@@ -1,14 +1,7 @@
 "use strict";
 
 const joi = require("joi");
-
-const validateOpts = {
-    abortEarly: false,
-    stripUnknown: true,
-    errors: {
-        escapeHtml: true
-    }
-};
+const validator = require("./makeValidator");
 
 const registerSchema = joi.object({
     username: joi.string()
@@ -35,23 +28,8 @@ const loginSchema = joi.object({
         .required()
 });
 
-const validateRegistration = makeBodyValidator(registerSchema);
-const validateLogin        = makeBodyValidator(loginSchema);
-
-function makeBodyValidator (schema) {
-    return function (req, res, next) {
-        const {value, error} = schema.validate(req.body, validateOpts)
-    
-        if (error) {
-            const errorMessages = error.details.map(detail => detail.message);
-            console.log(errorMessages);
-            return res.status(400).json({"errors": errorMessages});
-        } 
-
-        req.body = value;
-        next();
-    }
-}
+const validateRegistration = validator.makeValidator(registerSchema);
+const validateLogin        = validator.makeValidator(loginSchema);
 
 module.exports = {
     validateRegistration,

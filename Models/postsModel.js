@@ -42,6 +42,16 @@ function getAllByDate () {
     return posts;
 }
 
+function getAllByLikes () {
+    const sql = `
+        SELECT * FROM Posts
+        ORDER BY likes ASC
+    `;
+    const stmt = db.prepare(sql);
+    const posts = stmt.all();
+    return posts;
+}
+
 function getPost (postID) {
     const sql = `
         SELECT * FROM 
@@ -55,8 +65,81 @@ function getPost (postID) {
     return post;
 }
 
+function incLikes (postID, userID) {
+    const sql1 = `
+        UPDATE Posts
+        SET 
+            likes = (likes + 1)
+        WHERE
+            postID = @postID
+    `;
+
+    const sql2 = `
+        INSERT INTO PostLikes
+            (postID, userID)
+        VALUES
+            (@postID, @userID)
+    `;
+
+    const stmt1 = db.prepare(sql1);
+    const stmt2 = db.prepare(sql2);
+
+    try {
+        stmt1.run({postID});
+        stmt2.run({postID,userID});
+        return true;
+    } catch (error) {
+        console.log(error);
+        return false;
+    }
+}
+
+function decLikes (postID, userID) {
+    const sql1 = `
+        UPDATE Posts
+        SET 
+            likes = (likes - 1)
+        WHERE
+            postID = @postID
+    `;
+
+    const sql2 = `
+        DELETE FROM PostLikes
+        WHERE
+            userID = @userID
+    `;
+
+    const stmt1 = db.prepare(sql1);
+    const stmt2 = db.prepare(sql2);
+
+    try {
+        stmt1.run({postID});
+        stmt2.run({userID});
+        return true;
+    } catch (error) {
+        console.log(error);
+        return false;
+    }
+}
+
+function checkLikes (postID, userID) {
+    const sql =`
+        SELECT * FROM PostLikes
+        WHERE
+            postID = @postID AND
+            userID = @userID
+    `;
+    const stmt = db.prepare(sql);
+    const like = stmt.get({postID, userID});
+    return like;
+}
+
 module.exports = {
     addPost,
     getAllByDate,
-    getPost
+    getAllByLikes,
+    getPost,
+    incLikes,
+    decLikes,
+    checkLikes
 }

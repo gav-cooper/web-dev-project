@@ -1,10 +1,13 @@
+/*****************************************************************************/
+/* postsModel.js                                                             */
+/*****************************************************************************/
+
 "use strict";
 
 const db = require("./db");
 const crypto = require("crypto");
 
 function addPost (username, subject, post) {
-    // change to multer?
     const postid = crypto.randomUUID();
 
     const sql = `

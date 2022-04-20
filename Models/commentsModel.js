@@ -5,19 +5,48 @@
 "use strict";
 
 /*****************************************************************************/
-// Require database
+// Requires
 const db = require("./db");
+const crypto = require("crypto");
 
 /*****************************************************************************/
 // Functions
 
-// function addComment(username){}
+function addComment(commenter, post, comment){
+    // generating unique identifier for comment ID
+    const commentid = crypto.randomUUID();
 
-// [...]
+    const sql = `
+        INSERT INTO Comments 
+            (commentID, commenter, comment, post, date) 
+        VALUES 
+            (@commentID, @commenter, @comment, @post, @date)
+    `;
+    
+    // will display time on comment
+    const time = Date.now();
+    
+    const add_comment = db.prepare(sql);
+    try {
+        add_comment.run({
+            "commentID":commentid,
+            "commenter":commenter,
+            "comment":comment,
+            "post": post,
+            "date": time
+        });
+        return true;
+    } catch (error) {
+        console.error(error);
+        return false;
+    }
+}
+
+// add functions to manage comment likes (check and change)
 
 /*****************************************************************************/
 // Exports
 
 module.exports = {
-    // addComment
+    addComment
 };

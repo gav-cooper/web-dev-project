@@ -69,8 +69,18 @@ app.get("/posts/:postID",
 app.post("/posts/:postID/like",
   postValidator.validatePostParam,
   postController.likePost)
+
 // Comments
-// [...]
+
+// creating comment on post
+// app.post("/posts/:postID/comments",
+//   commentValidator.validateComment,
+//   commentController.createComment)
+
+// liking comment on post
+// app.post("/posts/:postID/comments/like",
+//   commentValidator.validateCommentParam,
+//   commentController.likeComment)
 
 // Testing
 app.get("/api/test", (req, res) => {

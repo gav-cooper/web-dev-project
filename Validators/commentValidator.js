@@ -15,6 +15,13 @@ const commentSchema = joi.object({
 });
 const validateComment = validator.makeValidator(commentSchema, "body");
 
+const commentParamSchema = joi.object({
+    commentID: joi.string()
+        .required()
+});
+const validateCommentParam = validator.makeValidator(commentParamSchema, "params");
+
 module.exports = {
     validateComment,
+    validateCommentParam
 }

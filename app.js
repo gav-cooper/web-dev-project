@@ -43,6 +43,7 @@ const commentsController = require("./Controllers/commentsController");
 // Validators
 const userValidator = require("./Validators/userValidator");
 const postValidator = require("./Validators/postValidator");
+const commentValidator = require("./Validators/commentValidator");
 
 // Multer
 const pfpUpload = require("./pfpUploader");
@@ -75,11 +76,13 @@ app.post("/posts/:postID/like",
 // creating comment on post
 app.post("/posts/:postID/comments",
   commentValidator.validateComment,
-  commentController.createComment);
+  commentValidator.validateCommentParam,
+  commentsController.createComment);
 
 // liking comment on post
-app.post("/posts/:postID/comments/like",
-  commentController.likeComment);
+// app.post("/posts/:postID/comments/like",
+//   commentValidator.validateCommentParam,
+//   commentsController.likeComment);
 
 // Testing
 app.get("/api/test", (req, res) => {

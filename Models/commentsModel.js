@@ -16,17 +16,17 @@ function addComment(commenter, post, comment){
     // generating unique identifier for comment ID
     const commentid = crypto.randomUUID();
 
+    // will display time on comment
+    const time = Date.now();
+
     const sql = `
         INSERT INTO Comments 
             (commentID, commenter, comment, post, date) 
         VALUES 
-            (@commentID, @commenter, @comment, @post, @date)
-    `;
-    
-    // will display time on comment
-    const time = Date.now();
-    
+            (@commentID, @commenter, @comment, @post, @date)`;
     const add_comment = db.prepare(sql);
+
+    // try-catch for any errors
     try {
         add_comment.run({
             "commentID":commentid,

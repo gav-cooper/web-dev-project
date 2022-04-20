@@ -1,3 +1,8 @@
+/*
+    This file creates joi validators to avoid copy/pasting the same code multiple
+    times
+*/
+
 "use strict";
 
 const validateOpts = {

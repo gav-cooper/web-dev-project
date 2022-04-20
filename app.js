@@ -68,24 +68,23 @@ app.get("/posts/:postID",
   postController.viewPost);
 app.post("/posts/:postID/like",
   postValidator.validatePostParam,
-  postController.likePost)
+  postController.likePost);
 
 // Comments
 
 // creating comment on post
-// app.post("/posts/:postID/comments",
-//   commentValidator.validateComment,
-//   commentController.createComment)
+app.post("/posts/:postID/comments",
+  commentValidator.validateComment,
+  commentController.createComment);
 
 // liking comment on post
-// app.post("/posts/:postID/comments/like",
-//   commentValidator.validateCommentParam,
-//   commentController.likeComment)
+app.post("/posts/:postID/comments/like",
+  commentController.likeComment);
 
 // Testing
 app.get("/api/test", (req, res) => {
     res.json({"user":req.session.user, "isLoggedIn":req.session.isLoggedIn});
-})
+});
 
 /*****************************************************************************/
 // Export app

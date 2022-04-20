@@ -32,3 +32,12 @@ CREATE TABLE IF NOT EXISTS PostLikes (
     FOREIGN KEY (postID) REFERENCES Posts(postID),
     FOREIGN KEY (userID) REFERENCES Users(userID)
 );
+
+CREATE TABLE IF NOT EXISTS CommentLikes (
+    commentID TEXT,
+    --postID TEXT,
+    userID TEXT NOT NULL,
+    FOREIGN KEY (commentID) REFERENCES Comments(commentID),
+    --FOREIGN KEY (postID) REFERENCES Posts(postID),
+    FOREIGN KEY (userID) REFERENCES Users(userID)
+);

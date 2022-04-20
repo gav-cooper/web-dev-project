@@ -11,10 +11,14 @@ const commentsModel = require("../Models/commentsModel");
 /******************************************************************************/
 // Functions
 
+// function createComment(req, res){}
+
+// function likeComment(req, res){}
 
 /******************************************************************************/
 // Exports 
 
 module.exports = {
-
+    // createComment
+    // likeComment
 };

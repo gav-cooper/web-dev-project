@@ -1,19 +1,17 @@
 /******************************************************************************/
 /* userController.js                                                          */
 /******************************************************************************/
-
 "use strict";
 
-/******************************************************************************/
 // Encryption
 const argon2 = require("argon2");
 
-/******************************************************************************/
 // Require user model
 const userModel = require("../Models/userModel");
 
-/******************************************************************************/
-
+/*
+    Allows the user to create a new account
+*/
 async function createNewUser(req, res){
     const {username, email, password} = req.body;
 
@@ -24,7 +22,9 @@ async function createNewUser(req, res){
     res.sendStatus(201);
 } 
 
-// Login
+/*
+    Lets the user log in and initializes the session object
+*/
 async function login(req, res){
     // Login using username or email
     const {value, password} = req.body;
@@ -80,6 +80,9 @@ async function login(req, res){
     }
 }
 
+/*
+    Allows the user to change their password
+*/
 async function updatePassword(req, res) {
     if (!req.session.user) {
         return res.sendStatus(400);
@@ -102,11 +105,22 @@ async function updatePassword(req, res) {
     userModel.updatePassword(req.params.userID, newPassword);
     res.sendStatus(201);
 }
-/******************************************************************************/
-// Exports 
+
+/*
+    Allows the user to set a custom profile picture
+*/
+function newPfp (req, res) {
+    if (!req.session.isLoggedIn) {
+        return res.sendStatus(403);
+    }
+    const {userID} = userModel.getUserByUsername(req.session.user.username);
+    userModel.updatePfp(userID,String(req.file.path));
+    res.sendStatus(201);
+}
 
 module.exports = {
     createNewUser,
     login,
-    updatePassword
+    updatePassword,
+    newPfp
 };

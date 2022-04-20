@@ -4,14 +4,13 @@
 
 "use strict";
 
-/******************************************************************************/
-// Require post model
+// Require models
 const postsModel = require("../Models/postsModel");
 const userModel  = require("../Models/userModel");
 
-/******************************************************************************/
-// Functions
-
+/*
+    This function is used to allow the user to create posts
+*/
 async function createPost(req, res) {
     if (!req.session.isLoggedIn) { 
         return res.sendStatus(401)
@@ -33,6 +32,10 @@ function viewPost(req,res) {
     res.sendStatus(200);
 }
 
+/*
+    This function allows the user to like posts. It does not allow them to like
+    a post multiple times, so if they have already liked the post, it removes it
+*/
 function likePost(req, res) {
     if (!req.session.isLoggedIn) {
         return res.sendStatus(403);
@@ -59,8 +62,6 @@ function likePost(req, res) {
 // function singlePost(req, res) {
 
 // }
-/******************************************************************************/
-// Exports 
 
 module.exports = {
     createPost,

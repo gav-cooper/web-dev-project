@@ -44,6 +44,9 @@ const commentsController = require("./Controllers/commentsController");
 const userValidator = require("./Validators/userValidator");
 const postValidator = require("./Validators/postValidator");
 
+// Multer
+const pfpUpload = require("./pfpUploader");
+
 // Endpoints
 app.post("/register", 
   userValidator.validateRegistration, 
@@ -54,6 +57,7 @@ app.post("/login",
 
 // Users
 app.post("/users/:userID/password",userController.updatePassword);
+app.post("/users/:userID/pfp",pfpUpload.pfp.single("pfp"),userController.newPfp);
 
 // Posts
 app.post("/posts", 

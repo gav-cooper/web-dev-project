@@ -5,7 +5,6 @@ const validator = require("./makeValidator");
 
 const postSchema = joi.object({
     subject: joi.string()
-        .lowercase()
         .required(),
 
     post: joi.string()

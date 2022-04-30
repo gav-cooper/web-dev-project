@@ -6,6 +6,13 @@ CREATE TABLE IF NOT EXISTS Users (
     pfpPath TEXT DEFAULT "public/pfp/pfp.png"
 );
 
+CREATE TABLE IF NOT EXISTS ForgottenPass (
+    tempID TEXT PRIMARY KEY,
+    email TEXT UNIQUE NOT NULL,
+    expiration INTEGER NOT NULL,
+    FOREIGN KEY(email) REFERENCES Users(email)
+);
+
 CREATE TABLE IF NOT EXISTS Posts (
     postID TEXT PRIMARY KEY,
     author TEXT NOT NULL,

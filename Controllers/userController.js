@@ -6,6 +6,16 @@
 // Encryption
 const argon2 = require("argon2");
 
+// Set up email transporter
+const nodemailer = require("nodemailer");
+const transporter = nodemailer.createTransport({
+    service: "Gmail",
+    auth: {
+        user: process.env.EMAIL_ADDRESS,
+        pass: process.env.EMAIL_PASSWORD
+    }
+});
+
 // Require user model
 const userModel = require("../Models/userModel");
 
@@ -118,9 +128,78 @@ function newPfp (req, res) {
     res.sendStatus(201);
 }
 
+/* 
+    Indicates that a user wants to reset their password
+*/
+async function forgottenPass (req, res) {
+    const {email} = req.body;
+    if (!userModel.getUserByEmail(email)) {
+        return res.sendStatus(400);
+    }
+    // Insert into forgotten password table if no entry already, update otherwise
+    if (!userModel.checkForgotPass(email)){
+        userModel.forgotPass(email);
+    } else {
+        userModel.updateTempID(email);
+    }
+
+    const {tempID} = userModel.checkForgotPass(email);
+    const text = (
+        "You have requested a password reset link!\n\n" + 
+        `Use this link to reset your password: ${process.env.URL}/${tempID}/forgotPassword`
+    );
+    
+    const html = (
+        "<h1 style=\"margin-bottom: 1rem;\">You have requested a link to reset your password</h1>" +
+        "<p>" +
+          `Click <a href="${process.env.URL}/${tempID}/forgotPassword">here</a> to reset your password!` +
+        "</p>"
+    );
+
+    const emailSent = await sendEmail(email, "Password reset", text, html);
+    if (emailSent) {
+        res.sendStatus(200);
+    } else {
+        res.sendStatus(500);
+    }
+}
+
+function resetPassword (req, res) {
+    const {tempID} = req.params;
+    if (!userModel.checkExpiration(tempID) || !userModel.checkForgotPassByID(tempID)) {
+        return res.sendStatus(400);
+    }
+    const {userID} = userModel.getUserInfoByTempID(tempID);
+    const {password} = req.body;
+    userModel.updatePassword(userID, password);
+    userModel.removeForgottenPass(tempID);
+    res.sendStatus(200);
+}
+
+/* Return's true if the email sent succesfully and false otherwise */
+async function sendEmail (recipient, subject, text, html) {
+  const message = {
+    from: process.env.EMAIL_ADDRESS,
+    to: recipient,
+    subject: subject,
+    text: text,
+    html: html
+  };
+  
+  try {
+    await transporter.sendMail(message);
+    return true;
+  } catch (err) {
+    console.error(err);
+    return false;
+  }
+}
+
 module.exports = {
     createNewUser,
     login,
     updatePassword,
-    newPfp
+    newPfp,
+    forgottenPass,
+    resetPassword
 };

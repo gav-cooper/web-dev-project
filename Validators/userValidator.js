@@ -28,10 +28,31 @@ const loginSchema = joi.object({
         .required()
 });
 
+const emailSchema = joi.object({
+    email: joi.string()
+        .email()
+        .required()
+});
+
+const tempIDSchema = joi.object({
+    tempID: joi.string()
+        .required()
+});
+
+const passwordSchema = joi.object({
+    password: joi.string()
+        .min(6)
+        .required()
+});
+
 const validateRegistration = validator.makeValidator(registerSchema);
 const validateLogin        = validator.makeValidator(loginSchema);
+const validateEmail        = validator.makeValidator(emailSchema);
+const validatePassword     = validator.makeValidator(passwordSchema,"body");
 
 module.exports = {
     validateRegistration,
-    validateLogin
+    validateLogin,
+    validateEmail,
+    validatePassword
 };

@@ -4,11 +4,22 @@
 
 "use strict";
 require("dotenv").config();
+const helmet = require("helmet");
+const isProduction = process.env.NODE_ENV === "production";
 
 // Session Management
 const redis = require("redis");
 const session = require("express-session");
 const RedisStore = require("connect-redis")(session);
+
+// Create app
+const express = require("express");
+const app = express();
+
+if (isProduction) {
+  app.set('trust proxy', 1);
+  app.use(helmet());
+}
 
 const sessionConfig = {
   store: new RedisStore({ client: redis.createClient() }),
@@ -17,14 +28,12 @@ const sessionConfig = {
   saveUninitialized: false,
   name: "session", // now it is just a generic name
   cookie: {
+    sameSite: isProduction,
+    secure: isProduction,
     httpOnly: true,
     maxAge: 1000 * 60 * 60 * 8, // 8 hours
   }
 };
-
-// Create app
-const express = require("express");
-const app = express();
 
 // Enabling session management
 app.use(session(sessionConfig));
@@ -55,8 +64,15 @@ app.post("/register",
 app.post("/login", 
   userValidator.validateLogin, 
   userController.login);
+app.post("/forgottenPassword", 
+  userValidator.validateEmail, 
+  userController.forgottenPass);
+app.get("/:tempID/forgotPassword",
+  userValidator.validatePassword,
+  userController.resetPassword);
 
 // Users
+// app.get("/user/:userID/forgotPassword")
 app.post("/users/:userID/password",userController.updatePassword);
 app.post("/users/:userID/pfp",pfpUpload.pfp.single("pfp"),userController.newPfp);
 

@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS Users (
     username TEXT UNIQUE NOT NULL,
     email TEXT UNIQUE NOT NULL,
     passwordHash TEXT NOT NULL,
-    pfpPath TEXT DEFAULT "public/pfp/pfp.png"
+    pfpPath TEXT DEFAULT "/pfp/pfp.png"
 );
 
 CREATE TABLE IF NOT EXISTS ForgottenPass (

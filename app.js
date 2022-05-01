@@ -57,6 +57,8 @@ const commentValidator = require("./Validators/commentValidator");
 // Multer
 const pfpUpload = require("./pfpUploader");
 
+app.set("view engine", "ejs");
+
 // Endpoints
 app.post("/register", 
   userValidator.validateRegistration, 
@@ -77,12 +79,13 @@ app.post("/users/:userID/password",userController.updatePassword);
 app.post("/users/:userID/pfp",pfpUpload.pfp.single("pfp"),userController.newPfp);
 
 // Posts
+app.get("/posts",postController.renderPosts);
 app.post("/posts", 
   postValidator.validatePost,
   postController.createPost);
 app.get("/posts/:postID",
   postValidator.validatePostParam,
-  postController.viewPost);
+  postController.singlePost);
 app.post("/posts/:postID/like",
   postValidator.validatePostParam,
   postController.likePost);

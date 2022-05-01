@@ -57,7 +57,7 @@ async function login(req, res){
                 req.session.user.username = user.username;
                 req.session.user.userID = user.userID;
                 req.session.isLoggedIn = true;
-                res.sendStatus(200);
+                res.redirect("/posts");
             });
         } else {
             // User login failure
@@ -81,7 +81,7 @@ async function login(req, res){
                 req.session.user.username = user.username;
                 req.session.user.userID = user.userID;
                 req.session.isLoggedIn = true;
-                res.sendStatus(200);
+                res.redirect("/posts");
             });
         } else {
             // User login failure

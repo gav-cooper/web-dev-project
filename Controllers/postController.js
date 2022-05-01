@@ -55,16 +55,23 @@ function likePost(req, res) {
     res.sendStatus(200);
 }
 
-// function renderPosts(req, res) {
+function renderPosts(req, res) {
+    const posts = postsModel.getAllByDate();
+    const user = req.session.user.username
+    res.render("allPosts", {posts, user});
+}
 
-// }
-
-// function singlePost(req, res) {
-
-// }
+function singlePost(req, res) {
+    const post = postsModel.getPost(req.params.postID);
+    const user = req.session.user;
+    const liked = postsModel.checkLikes(req.params.postID, req.session.user.userID);
+    res.render("singlePost",{post, user, liked});
+}
 
 module.exports = {
     createPost,
     viewPost,
-    likePost
+    likePost,
+    renderPosts,
+    singlePost
 };

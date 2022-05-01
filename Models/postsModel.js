@@ -37,7 +37,9 @@ function addPost (username, subject, post) {
 
 function getAllByDate () {
     const sql = `
-        SELECT * FROM Posts
+        SELECT postID, subject, date, likes, username, pfpPath FROM Posts
+        JOIN Users on
+            Posts.author=Users.userID
         ORDER BY date ASC
     `;
     const stmt = db.prepare(sql);
@@ -57,8 +59,10 @@ function getAllByLikes () {
 
 function getPost (postID) {
     const sql = `
-        SELECT * FROM 
+        SELECT postID, subject, post, date, likes, username FROM 
             Posts
+        JOIN Users on
+            Posts.author=Users.userID
         WHERE
             postID = (@postID)
 

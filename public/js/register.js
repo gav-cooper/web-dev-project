@@ -63,12 +63,3 @@ function clearInputs() {
     document.getElementById("email").value = "";
     document.getElementById("password").value = "";    
 }
-
-function timeoutButton() {
-    const button = document.getElementById("submit");
-    button.disabled = true;
-    setTimeout(() => {
-        button.disabled = false;
-    }, 10000)
-    return true;
-}

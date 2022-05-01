@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/js/singlePost.js" defer></script>
+    <link rel="stylesheet" href="/css/singlePost.css">
+    <title>Post</title>
+</head>
+<body>
+    <div id="toolbar" class="toolbar-wrapper">
+        <h1 id="website-title">Writing Space</h1>
+        <ul class="link-container">
+            <li id="posts"><a href="/posts">Home</a></li>
+            <li id="Account"><a href="/account/<%= user.username %>">Account</a></li>
+        </ul>
+    </div>
+    <p>Posted by: <a href="/users/<%= post.username %>"><%= post.username %></a></p>
+    <div class="post-wrapper">
+        <h1 id="subject"><%= post.subject %></h1>
+        <p id="post"> <%= post.post %> </p>
+        <span id="date"> Posted on <%= new Date(post.date).toLocaleDateString() %> </span>
+        <span id="time"> at <%= new Date(post.date).toLocaleTimeString() %> </span>
+        <div id="likes-wrapper">
+            <p id="likes" <% if (liked) { %>
+                class="liked"
+            <% } else{ %>
+                class="unliked"
+            <% } %>
+            >
+                Likes: <span id="numLikes"><%= post.likes %></span>
+            </p>
+            <button user="<%= user.userID %>" id="likePost">
+                <% if (liked) { %>
+                    Unlike
+                <% } else { %>
+                    Like
+                <% } %>
+            </button>
+        </div>
+    </div>
+</body>
+</html>

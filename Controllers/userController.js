@@ -16,8 +16,16 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-// Require user model
+// Require model
 const userModel = require("../Models/userModel");
+const postsModel = require("../Models/postsModel");
+
+function mainPage(req,res) {
+    if (req.session.isLoggedIn) {
+        return res.redirect("/posts");
+    }
+    res.render("index.ejs");
+}
 
 /*
     Allows the user to create a new account
@@ -124,7 +132,7 @@ function newPfp (req, res) {
         return res.sendStatus(403);
     }
     const {userID} = userModel.getUserByUsername(req.session.user.username);
-    userModel.updatePfp(userID,String(req.file.path));
+    userModel.updatePfp(userID,`/pfp/${req.file.filename}`);
     res.sendStatus(201);
 }
 
@@ -134,7 +142,7 @@ function newPfp (req, res) {
 async function forgottenPass (req, res) {
     const {email} = req.body;
     if (!userModel.getUserByEmail(email)) {
-        return res.sendStatus(400);
+        return res.sendStatus(200);
     }
     // Insert into forgotten password table if no entry already, update otherwise
     if (!userModel.checkForgotPass(email)){
@@ -195,11 +203,51 @@ async function sendEmail (recipient, subject, text, html) {
   }
 }
 
+function resetPasswordPage (req,res) {
+    res.render("resetPassword.ejs");
+}
+
+function displayUser (req,res) {
+    if (!req.session.isLoggedIn) {
+        return res.redirect("/");
+    }
+    if (req.params.username === req.session.user.username) {
+        return res.redirect(`/account/${req.params.username}`)
+    }
+    const user = userModel.getUserByUsername(req.params.username);
+    res.render("displayUser",{user});
+}
+
+function displayUserPosts (req,res) {
+    if (!req.session.isLoggedIn) {
+        return res.redirect("/");
+    }
+    const user = req.session.user;
+    const posts = postsModel.postsByUser(req.params.username);
+    res.render("displayUserPosts",{posts, user})
+}
+
+function displayAccountPage(req,res) {
+    if (!req.session.isLoggedIn) {
+        return res.redirect("/");
+    }
+    let user = userModel.getUserByUsername(req.params.username);
+    if (req.params.username !== req.session.user.username) {
+        user = false;
+    }
+    res.render("accountPage", {user})
+}
+
 module.exports = {
+    mainPage,
     createNewUser,
     login,
     updatePassword,
     newPfp,
     forgottenPass,
-    resetPassword
+    resetPassword,
+    resetPasswordPage,
+    displayUser,
+    displayUserPosts,
+    displayAccountPage
 };

@@ -40,7 +40,7 @@ function getAllByDate () {
         SELECT postID, subject, date, likes, username, pfpPath FROM Posts
         JOIN Users on
             Posts.author=Users.userID
-        ORDER BY date ASC
+        ORDER BY date DESC
     `;
     const stmt = db.prepare(sql);
     const posts = stmt.all();
@@ -141,6 +141,19 @@ function checkLikes (postID, userID) {
     return like;
 }
 
+function postsByUser (username) {
+    const sql = `
+        SELECT postID, subject, date, likes, username, pfpPath FROM Posts
+        JOIN Users on
+            Posts.author=Users.userID
+        WHERE Users.username=@username
+        ORDER BY date DESC
+    `;
+    const stmt = db.prepare(sql);
+    const posts = stmt.all({username});
+    return posts;
+}
+
 module.exports = {
     addPost,
     getAllByDate,
@@ -148,5 +161,6 @@ module.exports = {
     getPost,
     incLikes,
     decLikes,
-    checkLikes
+    checkLikes,
+    postsByUser
 }

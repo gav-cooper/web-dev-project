@@ -108,3 +108,8 @@ dist
 
 # Redis binary dump files
 *.rdb
+
+# Picture files
+*.png
+*.jpg
+*.jpeg

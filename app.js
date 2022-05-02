@@ -60,6 +60,7 @@ const pfpUpload = require("./pfpUploader");
 app.set("view engine", "ejs");
 
 // Endpoints
+app.get("/",userController.mainPage);
 app.post("/register", 
   userValidator.validateRegistration, 
   userController.createNewUser);
@@ -69,23 +70,28 @@ app.post("/login",
 app.post("/forgottenPassword", 
   userValidator.validateEmail, 
   userController.forgottenPass);
-app.get("/:tempID/forgotPassword",
+app.post("/:tempID/forgotPassword",
   userValidator.validatePassword,
   userController.resetPassword);
+app.get("/:tempID/forgotPassword",userController.resetPasswordPage);
 
 // Users
 // app.get("/user/:userID/forgotPassword")
+app.get("/users/:username", userController.displayUser);
 app.post("/users/:userID/password",userController.updatePassword);
 app.post("/users/:userID/pfp",pfpUpload.pfp.single("pfp"),userController.newPfp);
+app.get("/users/:username/posts",userController.displayUserPosts);
+app.get("/account/:username",userController.displayAccountPage);
 
 // Posts
 app.get("/posts",postController.renderPosts);
-app.post("/posts", 
-  postValidator.validatePost,
-  postController.createPost);
 app.get("/posts/:postID",
   postValidator.validatePostParam,
   postController.singlePost);
+app.get("/new",postController.newPost);
+app.post("/posts", 
+  postValidator.validatePost,
+  postController.createPost);
 app.post("/posts/:postID/like",
   postValidator.validatePostParam,
   postController.likePost);

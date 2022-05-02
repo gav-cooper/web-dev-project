@@ -154,6 +154,7 @@ function postsByUser (username) {
     return posts;
 }
 
+
 module.exports = {
     addPost,
     getAllByDate,
@@ -162,5 +163,5 @@ module.exports = {
     incLikes,
     decLikes,
     checkLikes,
-    postsByUser
+    postsByUser,
 }

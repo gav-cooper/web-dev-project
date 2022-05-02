@@ -3,7 +3,6 @@
 const button = document.getElementById("likePost");
 const likes = document.getElementById("likes")
 const numLikes = document.getElementById("numLikes");
-const user = document.getElementById("likePost").attributes.user.textContent;
 
 button.addEventListener("click", likeThePost);
 

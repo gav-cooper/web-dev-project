@@ -16,17 +16,19 @@
             <li id="Account"><a href="/account/<%= user.username %>">Account</a></li>
         </ul>
     </div>
-    <form method="POST" id="createPostForm" action="/posts">
-        <div>
-            <label for="subject">Subject</label>
-            <input id="subject" name="subject">
-        </div>
-        <div>
-            <label for="post">Post</label>
-            <textarea id="post" name="post"></textarea>
-        </div>
-        <button id="submit">Submit</button>
-    </form>
+    <div class="form-wrapper">
+        <form method="POST" id="createPostForm" action="/posts">
+            <div>
+                <label for="subject">Subject</label>
+                <input id="subject" name="subject">
+            </div>
+            <div>
+                <label for="post">Post</label>
+                <textarea id="post" name="post"></textarea>
+            </div>
+            <button id="submit">Submit</button>
+        </form>
+    </div>
     <div id="errors">
     </div>
 </body>

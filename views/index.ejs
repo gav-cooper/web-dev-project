@@ -4,22 +4,23 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/js/index.js" defer></script>
     <link rel="stylesheet" href="/css/index.css">
     <title>Log In</title>
 </head>
 <body>
     <h1>Welcome!</h1>
     <div class="form-wrapper">
-        <form method="POST" action="/login">
+        <form method="POST" id="loginForm" action="/login">
             <div class="username-container">
                 <label for="username"><b>Username or Email</b></label>
-                <input type="text" name="value" required>
+                <input type="text" id="value" name="value" required>
             </div>
             <div class="password-container">
                 <label for="password"><b>Password</b></label>
-                <input type="password" name="password" required>
+                <input type="password" id="password" name="password" required>
             </div>
-            <button>Submit</button>
+            <button id="submit">Submit</button>
         </form>
     </div>
     <div class="create-wrapper">
@@ -28,6 +29,9 @@
                 Register
             </a>
         </p>
+    </div>
+    <p class="forgotPassword">Forgot your password?<a href="/forgotPassword">Click here!</a></p>
+    <div id="errors">
     </div>
 </body>
 </html>

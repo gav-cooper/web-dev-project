@@ -91,11 +91,20 @@ function newPost(req,res) {
     res.render("new",{user});
 }
 
+function deletePost (req,res) {
+    if (req.params.username !== req.session.user.username) {
+        return res.sendStatus(403);
+    }
+    const postID = req.params.postID;
+    postsModel.deletePost(postID);
+}
+
 module.exports = {
     createPost,
     viewPost,
     likePost,
     renderPosts,
     singlePost,
-    newPost
+    newPost,
+    deletePost
 };

@@ -67,6 +67,7 @@ app.post("/register",
 app.post("/login", 
   userValidator.validateLogin, 
   userController.login);
+app.post("/logout",userController.logout);
 app.post("/forgottenPassword", 
   userValidator.validateEmail, 
   userController.forgottenPass);
@@ -82,6 +83,7 @@ app.post("/users/:userID/password",userController.updatePassword);
 app.post("/users/:userID/pfp",pfpUpload.pfp.single("pfp"),userController.newPfp);
 app.get("/users/:username/posts",userController.displayUserPosts);
 app.get("/account/:username",userController.displayAccountPage);
+app.get("/account/:username/posts",userController.displayAccountPosts);
 
 // Posts
 app.get("/posts",postController.renderPosts);
@@ -95,6 +97,7 @@ app.post("/posts",
 app.post("/posts/:postID/like",
   postValidator.validatePostParam,
   postController.likePost);
+// app.delete("/account/:username/posts/:postID",postController.deletePost)
 
 // Comments
 

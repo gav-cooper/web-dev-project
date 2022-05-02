@@ -50,7 +50,7 @@ async function login(req, res){
     if (!value.includes("@")){ // Login with username
         const user = userModel.getUserByUsername(value);
         if (!user) {
-            return res.sendStatus(400);
+            return res.sendStatus(404);
         }
 
         const {passwordHash} = user;
@@ -65,16 +65,16 @@ async function login(req, res){
                 req.session.user.username = user.username;
                 req.session.user.userID = user.userID;
                 req.session.isLoggedIn = true;
-                res.redirect("/posts");
+                res.sendStatus(200);
             });
         } else {
             // User login failure
-            res.sendStatus(400);
+            res.sendStatus(404);
         }
     } else if (value.includes("@")) { // Login with email
         const user = userModel.getUserByEmail(value);
         if (!user) {
-            return res.sendStatus(400);
+            return res.sendStatus(404);
         }
         
         const {passwordHash} = user;
@@ -89,11 +89,11 @@ async function login(req, res){
                 req.session.user.username = user.username;
                 req.session.user.userID = user.userID;
                 req.session.isLoggedIn = true;
-                res.redirect("/posts");
+                res.sendStatus(200);
             });
         } else {
             // User login failure
-            res.sendStatus(400);
+            res.sendStatus(404);
         }
     }
 }
@@ -215,7 +215,8 @@ function displayUser (req,res) {
         return res.redirect(`/account/${req.params.username}`)
     }
     const user = userModel.getUserByUsername(req.params.username);
-    res.render("displayUser",{user});
+    const loggedIn = req.session.user;
+    res.render("displayUser",{user, loggedIn});
 }
 
 function displayUserPosts (req,res) {
@@ -224,18 +225,42 @@ function displayUserPosts (req,res) {
     }
     const user = req.session.user;
     const posts = postsModel.postsByUser(req.params.username);
-    res.render("displayUserPosts",{posts, user})
+    const loggedIn = req.session.user;
+    res.render("displayUserPosts",{posts, user, loggedIn})
 }
 
 function displayAccountPage(req,res) {
     if (!req.session.isLoggedIn) {
         return res.redirect("/");
     }
-    let user = userModel.getUserByUsername(req.params.username);
+    const user = userModel.getUserByUsername(req.params.username);
+    let account = true;
     if (req.params.username !== req.session.user.username) {
-        user = false;
+        account = false;
     }
-    res.render("accountPage", {user})
+    const loggedIn = req.session.user;
+    res.render("accountPage", {user, account, loggedIn})
+}
+
+function displayAccountPosts (req,res) {
+    if (!req.session.isLoggedIn) {
+        return res.redirect("/");
+    }
+    const user = req.session.user;
+    const posts = postsModel.postsByUser(req.params.username);
+    const loggedIn = req.session.user;
+    let account = true;
+    if (req.params.username !== req.session.user.username) {
+        account = false;
+    }
+    res.render("accountPosts",{posts, user, loggedIn, account})
+}
+
+function logout (req,res) {
+    req.session.user = {};
+    req.session.isLoggedIn = false;
+    req.session.destroy((error) =>
+        res.redirect("/"));
 }
 
 module.exports = {
@@ -249,5 +274,7 @@ module.exports = {
     resetPasswordPage,
     displayUser,
     displayUserPosts,
-    displayAccountPage
+    displayAccountPage,
+    displayAccountPosts,
+    logout
 };

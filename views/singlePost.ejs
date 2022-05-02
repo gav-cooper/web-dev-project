@@ -20,8 +20,8 @@
     <div class="post-wrapper">
         <h1 id="subject"><%= post.subject %></h1>
         <p id="post"> <%= post.post %> </p>
-        <span id="date"> Posted on <%= new Date(post.date).toLocaleDateString() %> </span>
-        <span id="time"> at <%= new Date(post.date).toLocaleTimeString() %> </span>
+        <span id="date"> Posted on <%= new Date(post.date).toLocaleDateString("en-US", {timeZone: "America/Chicago"}) %> </span>
+        <span id="time"> at <%= new Date(post.date).toLocaleTimeString("en-US", {timeZone: "America/Chicago"}) %> </span>
         <div id="likes-wrapper">
             <p id="likes" <% if (liked) { %>
                 class="liked"
@@ -31,7 +31,7 @@
             >
                 Likes: <span id="numLikes"><%= post.likes %></span>
             </p>
-            <button user="<%= user.userID %>" id="likePost">
+            <button id="likePost">
                 <% if (liked) { %>
                     Unlike
                 <% } else { %>

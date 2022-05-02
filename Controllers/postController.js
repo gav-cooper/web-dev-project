@@ -55,17 +55,40 @@ function likePost(req, res) {
     res.sendStatus(200);
 }
 
+/*
+    Displays every post
+*/
 function renderPosts(req, res) {
+    if (!req.session.isLoggedIn) {
+        return res.redirect("/");
+    }
     const posts = postsModel.getAllByDate();
     const user = req.session.user.username
     res.render("allPosts", {posts, user});
 }
 
+/*
+    Page that displays a single post
+*/
 function singlePost(req, res) {
+    if (!req.session.isLoggedIn) {
+        return res.redirect("/");
+    }
     const post = postsModel.getPost(req.params.postID);
     const user = req.session.user;
     const liked = postsModel.checkLikes(req.params.postID, req.session.user.userID);
     res.render("singlePost",{post, user, liked});
+}
+
+/*
+    Display page to allow users to make a post
+*/
+function newPost(req,res) {
+    if (!req.session.isLoggedIn) {
+        return res.redirect("/");
+    }
+    const user = req.session.user
+    res.render("new",{user});
 }
 
 module.exports = {
@@ -73,5 +96,6 @@ module.exports = {
     viewPost,
     likePost,
     renderPosts,
-    singlePost
+    singlePost,
+    newPost
 };

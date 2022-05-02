@@ -15,6 +15,11 @@ body {
     color:white;
 }
 
+h1 > a {
+    color:white;
+    text-decoration: none;
+}
+
 .toolbar-wrapper > ul > li {
     display:inline;
     margin-left: 5px;
@@ -64,5 +69,3 @@ ul > li > a:hover {
     padding:0 2%;
     border:1px solid black;
 }
-
-

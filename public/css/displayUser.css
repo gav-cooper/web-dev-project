@@ -52,3 +52,18 @@ ul > li > a:hover {
 h1 {
     margin-bottom:0;
 }
+
+.pfp-wrapper {
+    display:flex;
+    justify-content: center;
+}
+
+.logout-wrapper {
+    display:flex;
+    margin:50px;
+    justify-content: center;
+}
+
+.error {
+    text-align: center;
+}

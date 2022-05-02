@@ -41,8 +41,14 @@ ul > li > a:hover {
     margin: .5%;
 }
 
-.posts-wrapper {
+.post-container {
     padding: .5%;
+    max-width: 80%;
+}
+
+p > a{
+    max-width:100%;
+    word-wrap: break-word;
 }
 
 #pfp {
@@ -68,4 +74,12 @@ ul > li > a:hover {
     margin-bottom: 10px;
     padding:0 2%;
     border:1px solid black;
+}
+
+.error {
+    text-align:center;
+}
+
+button {
+    margin-left:5%;
 }

@@ -36,3 +36,33 @@ ul > li > a {
 ul > li > a:hover {
     color:blue;
 }
+
+.form-wrapper {
+    display:flex;
+    flex-direction: column;
+    justify-content: left;
+    padding:.5%
+}
+
+input {
+    margin-bottom:1%;
+    width:100%;
+    max-width:99%;
+    height:30px;
+    padding:.5%;
+    font-size:100%;
+}
+
+textarea {
+    min-width:100%;
+    width: 100%;
+    font-size:20px;
+}
+
+button {
+    margin-top:.5%;
+}
+
+label {
+    text-align: center;
+}

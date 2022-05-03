@@ -78,7 +78,7 @@ app.get("/:tempID/forgotPassword",userController.resetPasswordPage);
 
 // Users
 app.get("/users/:username", userController.displayUser);
-app.post("/account/:username/password",userController.updatePassword);
+app.post("/account/:username/password",userValidator.validateNewPassword, userController.updatePassword);
 app.post("/users/:userID/pfp",pfpUpload.pfp.single("pfp"),userController.newPfp);
 app.get("/users/:username/posts",userController.displayUserPosts);
 app.get("/account/:username",userController.displayAccountPage);

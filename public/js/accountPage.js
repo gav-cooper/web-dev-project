@@ -1,10 +1,10 @@
 "use strict";
 
-const form = document.getElementById("resetPasswordForm");
+const form = document.getElementById("updatePasswordForm");
 
-form.addEventListener("submit", submitPasswordForm);
+form.addEventListener("submit", submitUpdatePasswordForm);
 
-async function submitPasswordForm (event) {
+async function submitUpdatePasswordForm (event) {
     event.preventDefault();
     const errorsContainer = document.querySelector("#errors");
     errorsContainer.innerHTML = "";
@@ -12,15 +12,15 @@ async function submitPasswordForm (event) {
     const body = getInputs();
 
     try {
-        const response = await fetch(`${window.location}`, {
+        const response = await fetch(`${window.location}/password`, {
             "method": "POST",
             "headers": {
                 "Content-Type": "application/json"
             },
             "body": JSON.stringify(body)
         });
-        if (response.ok) {      // Successfully changed
-            window.location.href="/"; 
+        if (response.ok) {      // Account created
+            appendData(errorsContainer, "Password updated successfully", "error"); 
 
         } else if (response.status === 400) {   // Input parameter error
             const data = await response.json();
@@ -30,8 +30,8 @@ async function submitPasswordForm (event) {
                 console.error(errorMsg);
                 appendData(errorsContainer, errorMsg, "error");
             }
-        } else if (response.status === 404) {
-            appendData(errorsContainer, "Your password reset ID has expired", "error");
+        } else if( response.status === 403) {  // Username/Email already in DB
+            appendData(errorsContainer, "Current password is incorrect!", "error");
         }
     } catch (err) {
         console.error(err);
@@ -39,10 +39,12 @@ async function submitPasswordForm (event) {
 }
 
 function getInputs() {
-    const password = document.getElementById("password").value;
-
+    const oldPassword = document.getElementById("oldPassword").value;
+    const newPassword = document.getElementById("newPassword").value;
+    console.log(oldPassword);
     return {
-        password
+        oldPassword,
+        newPassword
     }
 }
 

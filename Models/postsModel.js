@@ -154,6 +154,14 @@ function postsByUser (username) {
     return posts;
 }
 
+function deletePost (postID) {
+    const sql = `DELETE FROM Posts WHERE postID = @postID`;
+    const sql1 = `DELETE FROM PostLikes WHERE postID = @postID`;
+    const stmt = db.prepare(sql);
+    const stmt1 = db.prepare(sql1);
+    stmt1.run({postID});
+    stmt.run({postID});
+}
 
 module.exports = {
     addPost,
@@ -164,4 +172,5 @@ module.exports = {
     decLikes,
     checkLikes,
     postsByUser,
+    deletePost
 }

@@ -97,6 +97,7 @@ function deletePost (req,res) {
     }
     const postID = req.params.postID;
     postsModel.deletePost(postID);
+    res.sendStatus(200);
 }
 
 module.exports = {

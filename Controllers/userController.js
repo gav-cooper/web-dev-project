@@ -103,25 +103,25 @@ async function login(req, res){
 */
 async function updatePassword(req, res) {
     if (!req.session.user) {
-        return res.sendStatus(400);
+        return res.sendStatus(403);
     }
-    if (req.params.userID !== req.session.user.userID) {
+    if (req.params.username !== req.session.user.username) {
         return res.sendStatus(403);
     }
 
     const {oldPassword, newPassword} = req.body;
     const user = userModel.getUserByUsername(req.session.user.username);
     if (!user) {
-        return res.sendStatus(400);
+        return res.sendStatus(403);
     }
     const {passwordHash} = user;
 
     // check if password supplied matches password in database
     if (!(await argon2.verify(passwordHash,oldPassword))) {
-        return res.sendStatus(400);
+        return res.sendStatus(403);
     }
-    userModel.updatePassword(req.params.userID, newPassword);
-    res.sendStatus(201);
+    userModel.updatePassword(req.params.username, newPassword);
+    res.sendStatus(200);
 }
 
 /*
@@ -133,7 +133,7 @@ function newPfp (req, res) {
     }
     const {userID} = userModel.getUserByUsername(req.session.user.username);
     userModel.updatePfp(userID,`/pfp/${req.file.filename}`);
-    res.sendStatus(201);
+    res.redirect(`/account/${req.session.user.username}`);
 }
 
 /* 
@@ -172,10 +172,13 @@ async function forgottenPass (req, res) {
     }
 }
 
+/*
+    Resets the passowrd if a user has forgotten it
+*/
 function resetPassword (req, res) {
     const {tempID} = req.params;
-    if (!userModel.checkExpiration(tempID) || !userModel.checkForgotPassByID(tempID)) {
-        return res.sendStatus(400);
+    if (!userModel.checkForgotPassByID(tempID) || !userModel.checkExpiration(tempID)) {
+        return res.sendStatus(404);
     }
     const {userID} = userModel.getUserInfoByTempID(tempID);
     const {password} = req.body;

@@ -206,10 +206,16 @@ async function sendEmail (recipient, subject, text, html) {
   }
 }
 
+/*
+    renders page fo resetting a forgotten password
+*/
 function resetPasswordPage (req,res) {
     res.render("resetPassword.ejs");
 }
 
+/*
+    Page to display a specific user account
+*/
 function displayUser (req,res) {
     if (!req.session.isLoggedIn) {
         return res.redirect("/");
@@ -222,6 +228,9 @@ function displayUser (req,res) {
     res.render("displayUser",{user, loggedIn});
 }
 
+/*
+    Displays ever post a specific user has made
+*/
 function displayUserPosts (req,res) {
     if (!req.session.isLoggedIn) {
         return res.redirect("/");
@@ -238,6 +247,10 @@ function displayUserPosts (req,res) {
     res.render("displayUserPosts",{posts, user, loggedIn, numPages})
 }
 
+/*
+    Account page for a user. Similar to display user, but this page has more 
+    features
+*/
 function displayAccountPage(req,res) {
     if (!req.session.isLoggedIn) {
         return res.redirect("/");
@@ -251,6 +264,9 @@ function displayAccountPage(req,res) {
     res.render("accountPage", {user, account, loggedIn})
 }
 
+/*
+    Allows the user to manage the posts they have made
+*/
 function displayAccountPosts (req,res) {
     if (!req.session.isLoggedIn) {
         return res.redirect("/");
@@ -270,6 +286,10 @@ function displayAccountPosts (req,res) {
     res.render("accountPosts",{posts, user, loggedIn, account, numPages})
 }
 
+
+/*
+    Allows the user to logout
+*/
 function logout (req,res) {
     req.session.user = {};
     req.session.isLoggedIn = false;

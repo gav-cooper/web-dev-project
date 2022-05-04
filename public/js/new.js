@@ -19,7 +19,7 @@ async function submitUserForm (event) {
             },
             "body": JSON.stringify(body)
         });
-        if (response.ok) {      // Account created
+        if (response.ok) {      // Post was created
             window.location.href="/posts"; 
 
         } else if (response.status === 400) {   // Input parameter error

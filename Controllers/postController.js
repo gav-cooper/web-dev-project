@@ -26,11 +26,6 @@ async function createPost(req, res) {
     res.sendStatus(200);
 }
 
-function viewPost(req,res) {
-    // used soley for testing
-    console.log(postsModel.getPost(req.params.postID));
-    res.sendStatus(200);
-}
 
 /*
     This function allows the user to like posts. It does not allow them to like
@@ -96,6 +91,9 @@ function newPost(req,res) {
     res.render("new",{user});
 }
 
+/*
+    Deletes a post
+*/
 function deletePost (req,res) {
     if (req.params.username !== req.session.user.username) {
         return res.sendStatus(403);

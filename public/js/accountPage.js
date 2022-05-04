@@ -4,6 +4,7 @@ const form = document.getElementById("updatePasswordForm");
 
 form.addEventListener("submit", submitUpdatePasswordForm);
 
+// Submits the form to update a user's password
 async function submitUpdatePasswordForm (event) {
     event.preventDefault();
     const errorsContainer = document.querySelector("#errors");
@@ -19,7 +20,7 @@ async function submitUpdatePasswordForm (event) {
             },
             "body": JSON.stringify(body)
         });
-        if (response.ok) {      // Account created
+        if (response.ok) {      // Password created
             appendData(errorsContainer, "Password updated successfully", "error"); 
 
         } else if (response.status === 400) {   // Input parameter error
@@ -30,7 +31,7 @@ async function submitUpdatePasswordForm (event) {
                 console.error(errorMsg);
                 appendData(errorsContainer, errorMsg, "error");
             }
-        } else if( response.status === 403) {  // Username/Email already in DB
+        } else if( response.status === 403) {  // Supplied wrong password
             appendData(errorsContainer, "Current password is incorrect!", "error");
         }
     } catch (err) {

@@ -63,30 +63,39 @@ const pfpUpload = require("./pfpUploader");
 app.set("view engine", "ejs");
 
 // Endpoints
-app.get("/",userController.mainPage);
+app.get("/",
+  userController.mainPage);
 app.post("/register", 
   userValidator.validateRegistration, 
   catchAsyncErrors(userController.createNewUser));
 app.post("/login", 
   userValidator.validateLogin, 
   userController.login);
-app.post("/logout",userController.logout);
+app.post("/logout",
+  userController.logout);
 app.post("/forgottenPassword", 
   userValidator.validateEmail, 
   userController.forgottenPass);
 app.post("/:tempID/forgotPassword",
   userValidator.validatePassword,
   userController.resetPassword);
-app.get("/:tempID/forgotPassword",userController.resetPasswordPage);
+app.get("/:tempID/forgotPassword",
+  userController.resetPasswordPage);
 
 // Users
-app.get("/users/:username", userController.displayUser);
-app.post("/account/:username/password",userValidator.validateNewPassword, userController.updatePassword);
-app.post("/users/:userID/pfp",pfpUpload.pfp.single("pfp"),userController.newPfp);
+app.get("/users/:username", 
+  userController.displayUser);
+app.post("/account/:username/password",
+  userValidator.validateNewPassword, 
+  userController.updatePassword);
+app.post("/users/:userID/pfp",
+  pfpUpload.pfp.single("pfp"),
+  userController.newPfp);
 app.get("/users/:username/posts",
   postValidator.validateQueryPageSchema,
   userController.displayUserPosts);
-app.get("/account/:username",userController.displayAccountPage);
+app.get("/account/:username",
+  userController.displayAccountPage);
 app.get("/account/:username/posts",
   postValidator.validateQueryPageSchema,
   userController.displayAccountPosts);
@@ -98,14 +107,16 @@ app.get("/posts",
 app.get("/posts/:postID",
   postValidator.validatePostParam,
   postController.singlePost);
-app.get("/new",postController.newPost);
+app.get("/new",
+  postController.newPost);
 app.post("/posts", 
   postValidator.validatePost,
   catchAsyncErrors(postController.createPost));
 app.post("/posts/:postID/like",
   postValidator.validatePostParam,
   postController.likePost);
-app.delete("/account/:username/posts/:postID",postController.deletePost)
+app.delete("/account/:username/posts/:postID",
+  postController.deletePost)
 
 // Comments
 
@@ -119,12 +130,6 @@ app.post("/posts/:postID/comments",
 // app.post("/posts/:postID/comments/like",
 //   commentValidator.validateCommentParam,
 //   commentsController.likeComment);
-
-// Testing
-app.get("/api/test", (req, res) => {
-    res.json({"user":req.session.user, "isLoggedIn":req.session.isLoggedIn});
-});
-
 
 // Not Found Error Handler
 app.use(notFoundHandler);

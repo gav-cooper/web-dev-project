@@ -69,15 +69,15 @@ function getUserByEmail(email) {
 }
 
 // Updates values if new data is provided, otherwise uses data already in DB
-async function updatePassword(userID, password) {
+async function updatePassword(username, password) {
     const hash = await argon2.hash(password);
     const sql = `
         UPDATE Users SET 
            passwordHash = @hash
         WHERE 
-            userID = @userID`;
+            username = @username`;
     const stmt = db.prepare(sql);
-    stmt.run({userID, hash});
+    stmt.run({username, hash});
 }
 
 function updatePfp(userID, pfpPath) {

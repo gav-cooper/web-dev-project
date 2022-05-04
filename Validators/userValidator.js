@@ -45,14 +45,26 @@ const passwordSchema = joi.object({
         .required()
 });
 
+const newPasswordSchema = joi.object({
+    oldPassword: joi.string()
+        .min(6)
+        .required(),
+    
+    newPassword: joi.string()
+        .min(6)
+        .required(6)
+})
+
 const validateRegistration = validator.makeValidator(registerSchema);
 const validateLogin        = validator.makeValidator(loginSchema);
 const validateEmail        = validator.makeValidator(emailSchema);
 const validatePassword     = validator.makeValidator(passwordSchema,"body");
+const validateNewPassword  = validator.makeValidator(newPasswordSchema);
 
 module.exports = {
     validateRegistration,
     validateLogin,
     validateEmail,
-    validatePassword
+    validatePassword,
+    validateNewPassword
 };

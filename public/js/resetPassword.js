@@ -19,7 +19,7 @@ async function submitPasswordForm (event) {
             },
             "body": JSON.stringify(body)
         });
-        if (response.ok) {      // Account created
+        if (response.ok) {      // Successfully changed
             window.location.href="/"; 
 
         } else if (response.status === 400) {   // Input parameter error
@@ -30,7 +30,9 @@ async function submitPasswordForm (event) {
                 console.error(errorMsg);
                 appendData(errorsContainer, errorMsg, "error");
             }
-        } 
+        } else if (response.status === 404) {
+            appendData(errorsContainer, "Your password reset ID has expired", "error");
+        }
     } catch (err) {
         console.error(err);
     }

@@ -35,15 +35,31 @@ function addPost (username, subject, post) {
     }
 }
 
-function getAllByDate () {
+function getNumberOfPosts (post) {
+    const sql = `SELECT count(*) as count FROM Posts`;
+    const stmt = db.prepare(sql);
+    const numPosts = stmt.get();
+    return numPosts.count;
+}
+
+function getNumUserPosts (author) {
+    const sql = `SELECT count(*) as count FROM Posts WHERE author=@author`;
+    const stmt = db.prepare(sql);
+    const numPosts = stmt.get({author});
+    return numPosts.count;
+}
+
+function getAllByDate (pageNumber) {
+    const offset = (pageNumber - 1) * 25;
     const sql = `
         SELECT postID, subject, date, likes, username, pfpPath FROM Posts
         JOIN Users on
             Posts.author=Users.userID
         ORDER BY date DESC
+        LIMIT 25 OFFSET (@offset)
     `;
     const stmt = db.prepare(sql);
-    const posts = stmt.all();
+    const posts = stmt.all({offset});
     return posts;
 }
 
@@ -141,22 +157,34 @@ function checkLikes (postID, userID) {
     return like;
 }
 
-function postsByUser (username) {
+function postsByUser (username, pageNumber) {
+    const offset = (pageNumber - 1) * 25;
     const sql = `
         SELECT postID, subject, date, likes, username, pfpPath FROM Posts
         JOIN Users on
             Posts.author=Users.userID
         WHERE Users.username=@username
         ORDER BY date DESC
+        LIMIT 25 OFFSET (@offset)
     `;
     const stmt = db.prepare(sql);
-    const posts = stmt.all({username});
+    const posts = stmt.all({username, offset});
     return posts;
 }
 
+function deletePost (postID) {
+    const sql = `DELETE FROM Posts WHERE postID = @postID`;
+    const sql1 = `DELETE FROM PostLikes WHERE postID = @postID`;
+    const stmt = db.prepare(sql);
+    const stmt1 = db.prepare(sql1);
+    stmt1.run({postID});
+    stmt.run({postID});
+}
 
 module.exports = {
     addPost,
+    getNumberOfPosts,
+    getNumUserPosts,
     getAllByDate,
     getAllByLikes,
     getPost,
@@ -164,4 +192,5 @@ module.exports = {
     decLikes,
     checkLikes,
     postsByUser,
+    deletePost
 }

@@ -58,6 +58,7 @@ function appendData(container, message, className) {
     container.append(paragraph);
 }
 
+// Remove any input the user has made
 function clearInputs() {
     document.getElementById("username").value = "";
     document.getElementById("email").value = "";

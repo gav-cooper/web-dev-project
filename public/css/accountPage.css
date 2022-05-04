@@ -52,3 +52,8 @@ ul > li > a:hover {
 h1 {
     margin-bottom:0;
 }
+
+.password-wrapper {
+    display:flex;
+    flex-direction:column;
+}

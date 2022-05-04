@@ -26,11 +26,6 @@ async function createPost(req, res) {
     res.sendStatus(200);
 }
 
-function viewPost(req,res) {
-    // used soley for testing
-    console.log(postsModel.getPost(req.params.postID));
-    res.sendStatus(200);
-}
 
 /*
     This function allows the user to like posts. It does not allow them to like
@@ -62,9 +57,14 @@ function renderPosts(req, res) {
     if (!req.session.isLoggedIn) {
         return res.redirect("/");
     }
-    const posts = postsModel.getAllByDate();
+    let pageNumber = 1;
+    if (req.query.pageNumber) {
+        pageNumber = req.query.pageNumber
+    }
+    const numPages = (postsModel.getNumberOfPosts() / 25);
+    const posts = postsModel.getAllByDate(pageNumber);
     const user = req.session.user.username
-    res.render("allPosts", {posts, user});
+    res.render("allPosts", {posts, user, numPages});
 }
 
 /*
@@ -91,12 +91,16 @@ function newPost(req,res) {
     res.render("new",{user});
 }
 
+/*
+    Deletes a post
+*/
 function deletePost (req,res) {
     if (req.params.username !== req.session.user.username) {
         return res.sendStatus(403);
     }
     const postID = req.params.postID;
     postsModel.deletePost(postID);
+    res.sendStatus(200);
 }
 
 module.exports = {

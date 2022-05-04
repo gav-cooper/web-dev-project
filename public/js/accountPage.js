@@ -1,10 +1,11 @@
 "use strict";
 
-const form = document.getElementById("createPostForm");
+const form = document.getElementById("updatePasswordForm");
 
-form.addEventListener("submit", submitUserForm);
+form.addEventListener("submit", submitUpdatePasswordForm);
 
-async function submitUserForm (event) {
+// Submits the form to update a user's password
+async function submitUpdatePasswordForm (event) {
     event.preventDefault();
     const errorsContainer = document.querySelector("#errors");
     errorsContainer.innerHTML = "";
@@ -12,15 +13,15 @@ async function submitUserForm (event) {
     const body = getInputs();
 
     try {
-        const response = await fetch("/posts", {
+        const response = await fetch(`${window.location}/password`, {
             "method": "POST",
             "headers": {
                 "Content-Type": "application/json"
             },
             "body": JSON.stringify(body)
         });
-        if (response.ok) {      // Post was created
-            window.location.href="/posts"; 
+        if (response.ok) {      // Password created
+            appendData(errorsContainer, "Password updated successfully", "error"); 
 
         } else if (response.status === 400) {   // Input parameter error
             const data = await response.json();
@@ -30,19 +31,21 @@ async function submitUserForm (event) {
                 console.error(errorMsg);
                 appendData(errorsContainer, errorMsg, "error");
             }
-        } 
+        } else if( response.status === 403) {  // Supplied wrong password
+            appendData(errorsContainer, "Current password is incorrect!", "error");
+        }
     } catch (err) {
         console.error(err);
     }
 }
 
 function getInputs() {
-    const subject = document.getElementById("subject").value;
-    const post = document.getElementById("post").value;
-
+    const oldPassword = document.getElementById("oldPassword").value;
+    const newPassword = document.getElementById("newPassword").value;
+    console.log(oldPassword);
     return {
-        subject,
-        post
+        oldPassword,
+        newPassword
     }
 }
 

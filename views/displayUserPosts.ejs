@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/allPosts.css">
-    <title>Main Page</title>
+    <title>User's Posts</title>
 </head>
 <body>
     <div id="toolbar" class="toolbar-wrapper">
@@ -16,8 +16,8 @@
         </ul>
     </div>
     <div class="posts-wrapper">
-        <% if (!!posts === false) { %>
-            <span class="no-posts">There are no posts. Be the first to post something!</span>
+        <% if (posts.length <= 0) { %>
+            <h1 class="no-posts">This user has not posted anything</h1>
             
         <% } else { %>
             <% for (const post of posts) { %>
@@ -32,6 +32,17 @@
                         <p>Likes: <%= post.likes %></p> 
                     </div>
                 </div>
+            <% } %>
+            <% if (numPages > 1) { %>
+                <form action="/users/<%= posts[0].username %>/posts" method="GET">
+                    <label for="page">Enter Page Number:</label>
+                    <select id="page" name="pageNumber">
+                        <% for (let i = 0; i < numPages; i++) { %>
+                            <option name="<%= i+1 %>"><%= i+1 %></option>
+                        <% } %>
+                        </select>
+                    <button id="submit">Submit</button>
+                </form>
             <% } %>
         <% } %>
     </div>

@@ -4,6 +4,9 @@ const form = document.getElementById("resetPasswordForm");
 
 form.addEventListener("submit", submitUserForm);
 
+/*
+    Submits the user form when button is clicked, displays any errors that occur
+*/
 async function submitUserForm (event) {
     event.preventDefault();
     const errorsContainer = document.querySelector("#errors");

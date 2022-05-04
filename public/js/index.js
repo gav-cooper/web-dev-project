@@ -4,6 +4,7 @@ const form = document.getElementById("loginForm");
 
 form.addEventListener("submit", submitLoginForm);
 
+// Submits the login form
 async function submitLoginForm (event) {
     event.preventDefault();
     const errorsContainer = document.querySelector("#errors");

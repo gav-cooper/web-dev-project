@@ -83,12 +83,18 @@ app.get("/:tempID/forgotPassword",userController.resetPasswordPage);
 app.get("/users/:username", userController.displayUser);
 app.post("/account/:username/password",userValidator.validateNewPassword, userController.updatePassword);
 app.post("/users/:userID/pfp",pfpUpload.pfp.single("pfp"),userController.newPfp);
-app.get("/users/:username/posts",userController.displayUserPosts);
+app.get("/users/:username/posts",
+  postValidator.validateQueryPageSchema,
+  userController.displayUserPosts);
 app.get("/account/:username",userController.displayAccountPage);
-app.get("/account/:username/posts",userController.displayAccountPosts);
+app.get("/account/:username/posts",
+  postValidator.validateQueryPageSchema,
+  userController.displayAccountPosts);
 
 // Posts
-app.get("/posts",postController.renderPosts);
+app.get("/posts",  
+  postValidator.validateQueryPageSchema,
+  postController.renderPosts);
 app.get("/posts/:postID",
   postValidator.validatePostParam,
   postController.singlePost);

@@ -33,6 +33,17 @@
                     </div>
                 </div>
             <% } %>
+            <% if (numPages > 1) { %>
+                <form action="/users/<%= posts[0].username %>/posts" method="GET">
+                    <label for="page">Enter Page Number:</label>
+                    <select id="page" name="pageNumber">
+                        <% for (let i = 0; i < numPages; i++) { %>
+                            <option name="<%= i+1 %>"><%= i+1 %></option>
+                        <% } %>
+                        </select>
+                    <button id="submit">Submit</button>
+                </form>
+            <% } %>
         <% } %>
     </div>
 </body>

@@ -226,10 +226,16 @@ function displayUserPosts (req,res) {
     if (!req.session.isLoggedIn) {
         return res.redirect("/");
     }
+    let pageNumber = 1;
+    if (req.query.pageNumber) {
+        pageNumber = req.query.pageNumber
+    }
+    const {userID} = userModel.getUserByUsername(req.params.username);
+    const numPages = Math.ceil((postsModel.getNumUserPosts(userID) / 25));
     const user = req.session.user;
-    const posts = postsModel.postsByUser(req.params.username);
+    const posts = postsModel.postsByUser(req.params.username, pageNumber);
     const loggedIn = req.session.user;
-    res.render("displayUserPosts",{posts, user, loggedIn})
+    res.render("displayUserPosts",{posts, user, loggedIn, numPages})
 }
 
 function displayAccountPage(req,res) {
@@ -249,14 +255,19 @@ function displayAccountPosts (req,res) {
     if (!req.session.isLoggedIn) {
         return res.redirect("/");
     }
+    let pageNumber = 1;
+    if (req.query.pageNumber) {
+        pageNumber = req.query.pageNumber
+    }
+    const numPages = Math.ceil((postsModel.getNumUserPosts(req.session.user.userID) / 25));
     const user = req.session.user;
-    let posts = postsModel.postsByUser(req.params.username);
+    let posts = postsModel.postsByUser(req.params.username, pageNumber);
     const loggedIn = req.session.user;
     let account = true;
     if (req.params.username !== req.session.user.username) {
         account = false;
     }
-    res.render("accountPosts",{posts, user, loggedIn, account})
+    res.render("accountPosts",{posts, user, loggedIn, account, numPages})
 }
 
 function logout (req,res) {

@@ -16,10 +16,18 @@ const postParamSchema = joi.object({
         .required()
 });
 
+const queryPageSchema = joi.object({
+    pageNumber: joi.number()
+        .integer()
+        .min(1)
+})
+
 const validatePost = validator.makeValidator(postSchema, "body");
 const validatePostParam = validator.makeValidator(postParamSchema, "params");
+const validateQueryPageSchema = validator.makeValidator(queryPageSchema,"params");
 
 module.exports = {
     validatePost,
-    validatePostParam
+    validatePostParam,
+    validateQueryPageSchema
 }

@@ -62,9 +62,14 @@ function renderPosts(req, res) {
     if (!req.session.isLoggedIn) {
         return res.redirect("/");
     }
-    const posts = postsModel.getAllByDate();
+    let pageNumber = 1;
+    if (req.query.pageNumber) {
+        pageNumber = req.query.pageNumber
+    }
+    const numPages = (postsModel.getNumberOfPosts() / 25);
+    const posts = postsModel.getAllByDate(pageNumber);
     const user = req.session.user.username
-    res.render("allPosts", {posts, user});
+    res.render("allPosts", {posts, user, numPages});
 }
 
 /*

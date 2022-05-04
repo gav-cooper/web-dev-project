@@ -100,9 +100,8 @@ app.post("/posts/:postID/like",
 // app.delete("/account/:username/posts/:postID",postController.deletePost)
 
 // Comments
-
 // creating comment on post
-app.post("/posts/:postID/comments",
+app.post("/posts/:postID",
   commentValidator.validateComment,
   commentValidator.validateCommentParam,
   commentsController.createComment);

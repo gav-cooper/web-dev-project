@@ -31,12 +31,20 @@ async function createComment(req, res){
     res.sendStatus(200);
 }
 
+function renderComments(req, res) {
+    if (!req.session.isLoggedIn) {
+        return res.redirect("/");
+    }
+    const comment = commentsModel.getComments(req.params.postID);
+    console.log(comment);
+    res.render("renderComments",{comment});
+}
 
-// function likeComment(req, res){}
 
 /******************************************************************************/
 // Exports 
 
 module.exports = {
-    createComment
+    createComment,
+    renderComments
 };

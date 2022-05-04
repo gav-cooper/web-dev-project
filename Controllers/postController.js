@@ -7,6 +7,7 @@
 // Require models
 const postsModel = require("../Models/postsModel");
 const userModel  = require("../Models/userModel");
+const commentsModel  = require("../Models/commentsModel");
 
 /*
     This function is used to allow the user to create posts
@@ -77,7 +78,8 @@ function singlePost(req, res) {
     const post = postsModel.getPost(req.params.postID);
     const user = req.session.user;
     const liked = postsModel.checkLikes(req.params.postID, req.session.user.userID);
-    res.render("singlePost",{post, user, liked});
+    const comments = commentsModel.getComments(req.params.postID)
+    res.render("singlePost",{post, user, liked, comments});
 }
 
 /*
@@ -105,7 +107,6 @@ function deletePost (req,res) {
 
 module.exports = {
     createPost,
-    viewPost,
     likePost,
     renderPosts,
     singlePost,

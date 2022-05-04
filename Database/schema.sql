@@ -32,8 +32,8 @@ CREATE TABLE IF NOT EXISTS PostLikes (
 
 CREATE TABLE IF NOT EXISTS Comments (
     commenter TEXT UNIQUE NOT NULL,
-    comment TEXT NOT NULL,
     post TEXT UNIQUE NOT NULL,
+    commentText TEXT NOT NULL,
     date INT NOT NULL,
     FOREIGN KEY(commenter) REFERENCES Users(userID),
     FOREIGN KEY(post) REFERENCES Posts(postID)

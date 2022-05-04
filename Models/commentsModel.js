@@ -12,17 +12,17 @@ const crypto = require("crypto");
 /*****************************************************************************/
 // Functions
 
-function addComment(commenter, comment, postID){
+function addComment(commenter, commentText, postID){
     const time = Date.now();
 
-    const sql = `INSERT INTO Comments (commenter, comment, post, date) 
-                VALUES (@commenter, @comment, @post, @date)`;
+    const sql = `INSERT INTO Comments (commenter, commentText, post, date) 
+                VALUES (@commenter, @commentText, @post, @date)`;
     const add_comment = db.prepare(sql);
 
     try {
         add_comment.run({
             "commenter":commenter,
-            "comment":comment,
+            "commentText":commentText,
             "post": postID,
             "date": time
         });
@@ -36,9 +36,13 @@ function addComment(commenter, comment, postID){
 function getComments (postID) {
     const sql = `SELECT * FROM Comments WHERE post=@postID`;
     const getComment = db.prepare(sql);
-    const comments = getComment.get({"postID":postID});
 
-    return comments;
+    try {
+        getComment.get({"postID":postID});
+    } catch (error) {
+        console.error(error);
+        return false;
+    }
 }
 
 /*****************************************************************************/

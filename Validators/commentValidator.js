@@ -10,18 +10,10 @@ const validator = require("./makeValidator");
 /*****************************************************************************/
 
 const commentSchema = joi.object({
-    comment: joi.string()
-        .required(),
+    commentText: joi.string()
 });
 const validateComment = validator.makeValidator(commentSchema, "body");
 
-const commentParamSchema = joi.object({
-    commentID: joi.string()
-        .required()
-});
-const validateCommentParam = validator.makeValidator(commentParamSchema, "params");
-
 module.exports = {
     validateComment,
-    validateCommentParam
 }

@@ -48,20 +48,26 @@
             <h3 id="comment">Leave a comment...</h3>
         </div>
         <div>
-            <form action="/posts/:postID" method="post">
-                <textarea rows="3" cols="40" placeholder="Enter text" id="leavecomment-textbox" required></textarea>
+            <form action="/posts/:postID/comment" method="post">
+                <textarea rows="3" cols="40" placeholder="Enter text" id="leavecomment-textbox"></textarea>
                 <input type="submit" id="leavecomment-submit" value="Submit">
             </form>
         </div>
     </div>
     <div class="comments-container">
-        <div style="flex: 0 0 100%">
-            <p>Posted by: <%= comment.commenter %></p><br>
-            <span id="date"> <%= comment.date %> </span>
-        </div>
-        <div style="flex: 0 0 100%">
-            <text id="comment-text"> <%= comment.comment %> </text>
-        </div>
+            <% if (!!comments === false) { %>
+                <span class="no-comments"
+            <% } else { %>
+                <% for (const comment of comments) {%>
+                    <div style="flex: 0 0 100%">
+                        <p>Posted by: <%= comments.commenter %></p><br>
+                        <p><%= new Date(comments.date).toLocaleDateString("en-US", {timezone: "America/Chicago"}) %></p>
+                    </div>
+                    <div style="flex: 0 0 100%">
+                        <p><%= comments.commentText %></p>
+                    </div>
+                <% } %>
+            <% } %>
     </div>
 </body>
 </html>

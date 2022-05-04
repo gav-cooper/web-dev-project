@@ -124,11 +124,6 @@ app.post("/posts/:postID/comment",
   commentValidator.validateComment,
   commentsController.createComment);
 
-// liking comment on post
-// app.post("/posts/:postID/comments/like",
-//   commentValidator.validateCommentParam,
-//   commentsController.likeComment);
-
 // Not Found Error Handler
 app.use(notFoundHandler);
 

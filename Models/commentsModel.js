@@ -26,7 +26,7 @@ function addComment(commenter, commentText, postID){
             "post": postID,
             "date": time
         });
-        return true;
+        return add_comment;
     } catch (error) {
         console.error(error);
         return false;

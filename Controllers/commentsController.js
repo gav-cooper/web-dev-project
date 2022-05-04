@@ -21,7 +21,7 @@ async function createComment(req, res){
     // getting params for addComment()
     const {userID} = userModel.getUserByUsername(req.session.user.username);
     const {comment} = req.body;
-    const {post} = req.params;
+    const {post} = req.params.postID;
 
     if (!(await commentsModel.addComment(userID, comment, post))) { 
         return res.sendStatus(400) 

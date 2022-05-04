@@ -49,19 +49,19 @@
         </div>
         <div>
             <form action="/posts/:postID/comment" method="post">
-                <textarea rows="3" cols="40" placeholder="Enter text" id="leavecomment-textbox"></textarea>
+                <textarea id="leavecomment-textbox" name="leavecomment-textbox"></textarea>
                 <input type="submit" id="leavecomment-submit" value="Submit">
             </form>
         </div>
     </div>
     <div class="comments-container">
             <% if (!!comments === false) { %>
-                <span class="no-comments"
+                <span class="no-comments">No comments here. Be the first to comment something!</span>
             <% } else { %>
                 <% for (const comment of comments) {%>
                     <div style="flex: 0 0 100%">
-                        <p>Posted by: <%= comments.commenter %></p><br>
-                        <p><%= new Date(comments.date).toLocaleDateString("en-US", {timezone: "America/Chicago"}) %></p>
+                        <p>Posted by: <%= comment.commenter %></p><br>
+                        <p><%= new Date(comment.date).toLocaleDateString("en-US", {timezone: "America/Chicago"}) %></p>
                     </div>
                     <div style="flex: 0 0 100%">
                         <p><%= comments.commentText %></p>

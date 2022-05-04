@@ -90,3 +90,7 @@ button {
     display:flex;
     justify-self: right;
 }
+
+.no-posts {
+    text-align:center;
+}

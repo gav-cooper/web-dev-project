@@ -16,8 +16,8 @@
         </ul>
     </div>
     <div class="posts-wrapper">
-        <% if (!!posts === false) { %>
-            <span class="no-posts">There are no posts. Be the first to post something!</span>
+        <% if (posts.length <= 0) { %>
+            <h1 class="no-posts">This user has not posted anything</h1>
             
         <% } else { %>
             <% for (const post of posts) { %>

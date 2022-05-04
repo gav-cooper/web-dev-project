@@ -21,21 +21,25 @@
             <h1 class="error">This is not your account!</h1>
             
         <% } else { %>
-            <% let i = 0; for (const post of posts) { i = i + 1%>
-                <div class = "single-wrapper">
-                    <div class="user-container">
-                        <img id="pfp" src="<%= post.pfpPath %>">
-                        <p><a href="/users/<%= post.username %>"><%= post.username %></a></p>
+            <% if (posts.length <= 0) { %>
+            <h1 class="no-posts">This user has not posted anything</h1>
+            <% } else { %>
+                <% let i = 0; for (const post of posts) { i = i + 1%>
+                    <div class = "single-wrapper">
+                        <div class="user-container">
+                            <img id="pfp" src="<%= post.pfpPath %>">
+                            <p><a href="/users/<%= post.username %>"><%= post.username %></a></p>
+                        </div>
+                        <div class="post-container">
+                            <p><a href="/posts/<%= post.postID %>"><%= post.subject %></a></p>
+                            <p><%= new Date(post.date).toLocaleString() %></p>
+                            <p>Likes: <%= post.likes %></p> 
+                        </div>
+                        <div class="button-container">
+                            <button postID="<%= post.postID %>" id="button<%= i %>" class="button">Delete</button>
+                        </div>
                     </div>
-                    <div class="post-container">
-                        <p><a href="/posts/<%= post.postID %>"><%= post.subject %></a></p>
-                        <p><%= new Date(post.date).toLocaleString() %></p>
-                        <p>Likes: <%= post.likes %></p> 
-                    </div>
-                    <div class="button-container">
-                        <button postID="<%= post.postID %>" id="button<%= i %>" class="button">Delete</button>
-                    </div>
-                </div>
+                <% } %>
             <% } %>
         <% } %>
     </div>

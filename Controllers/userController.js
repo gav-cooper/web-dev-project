@@ -250,7 +250,7 @@ function displayAccountPosts (req,res) {
         return res.redirect("/");
     }
     const user = req.session.user;
-    const posts = postsModel.postsByUser(req.params.username);
+    let posts = postsModel.postsByUser(req.params.username);
     const loggedIn = req.session.user;
     let account = true;
     if (req.params.username !== req.session.user.username) {

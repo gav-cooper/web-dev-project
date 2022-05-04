@@ -44,6 +44,9 @@ app.use(express.static("public", {index: "index.html", extensions: ["html"]}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+// Error Handlers
+const {notFoundHandler, productionErrorHandler, catchAsyncErrors} = require("./utils/errorHandlers");
+
 // Require controllers
 const userController = require("./Controllers/userController");
 const postController = require("./Controllers/postController");
@@ -63,7 +66,7 @@ app.set("view engine", "ejs");
 app.get("/",userController.mainPage);
 app.post("/register", 
   userValidator.validateRegistration, 
-  userController.createNewUser);
+  catchAsyncErrors(userController.createNewUser));
 app.post("/login", 
   userValidator.validateLogin, 
   userController.login);
@@ -92,7 +95,7 @@ app.get("/posts/:postID",
 app.get("/new",postController.newPost);
 app.post("/posts", 
   postValidator.validatePost,
-  postController.createPost);
+  catchAsyncErrors(postController.createPost));
 app.post("/posts/:postID/like",
   postValidator.validatePostParam,
   postController.likePost);
@@ -116,6 +119,14 @@ app.get("/api/test", (req, res) => {
     res.json({"user":req.session.user, "isLoggedIn":req.session.isLoggedIn});
 });
 
+
+// Not Found Error Handler
+app.use(notFoundHandler);
+
+// Production error handler
+if (isProduction) {
+  app.use(productionErrorHandler);
+}
 /*****************************************************************************/
 // Export app
 
